@@ -21,7 +21,7 @@ resource "aws_iam_policy" "forge_staging_s3_access" {
       {
         Effect   = "Allow"
         Action = ["s3:ListBucket"]
-        Resource = aws_s3_bucket.forge_staging_bkt.arn
+        Resource = aws_s3_bucket.federated_forge_staging_bkt.arn
       },
 
       {
@@ -30,7 +30,7 @@ resource "aws_iam_policy" "forge_staging_s3_access" {
           "s3:PutObject",
           "s3:GetObject"
         ]
-        Resource = "${aws_s3_bucket.forge_staging_bkt.arn}/*"
+        Resource = "${aws_s3_bucket.federated_forge_staging_bkt.arn}/*"
       }
 
     ]
