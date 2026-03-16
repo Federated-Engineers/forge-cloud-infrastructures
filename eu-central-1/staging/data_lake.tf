@@ -1,13 +1,23 @@
-# our s3 bucket will be provisioned from the existing s3 module 
 
-module "forge_data_lake" {
-  source = "../modules/s3-bucket"  # source of the module
+# versioning is disabled, and there's no `prevent_destroy` lifecycle.
+# Destruction protections are intentionally relaxed in the staging bucket.
 
-  # the variables needed in provisioning the s3 bucket
-  environment = var.environment
-  team = var.team
-  bucket-use-case = var.bucket-use-case
-  service = var.service
-  versioning = var.versioning
+
+resource "aws_s3_bucket" "federated_forge_staging_bkt" {
+  bucket = "federated-forge-staging-bucket"
+  force_destroy = true
+  tags = merge(local.common_tags, {
+    Name = "forge_staging_bucket"
+    }
+  )
+
 }
 
+resource "aws_s3_bucket_versioning" "forge_staging_versioning" {
+  bucket = aws_s3_bucket.federated_forge_staging_bkt.id
+  versioning_configuration {
+    status = "Disabled"  #Not sure if we want to enable this yet
+  }
+}
+
+#Also we need to consider if and what lifecycle policies we want to use

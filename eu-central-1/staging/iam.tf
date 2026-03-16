@@ -15,8 +15,7 @@ resource "aws_iam_policy" "forge_team_staging_access" {
       {
         Effect   = "Allow"
         Action = ["s3:ListBucket"]
-        Resource = [module.forge_data_lake.arn]
-        # we leverage the output from the module for the bucket arn
+        Resource = aws_s3_bucket.federated_forge_staging_bkt.arn
       },
 
       {
@@ -25,10 +24,7 @@ resource "aws_iam_policy" "forge_team_staging_access" {
           "s3:PutObject",
           "s3:GetObject"
         ]
-        Resource = [
-          module.forge_data_lake.arn,
-          "${module.forge_data_lake.arn}/*" 
-        ]
+        Resource = "${aws_s3_bucket.federated_forge_staging_bkt.arn}/*"
       },
 
       {
