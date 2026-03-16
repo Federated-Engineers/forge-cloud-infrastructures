@@ -5,13 +5,7 @@ data "aws_iam_group" "forge_team" {
 }
 
 
-resource "aws_iam_user" "forge_staging_system_user" {
-  name = "forge_staging_user"
-  tags = local.common_tags
-}
-
-
-resource "aws_iam_policy" "forge_staging_s3_access" {
+resource "aws_iam_policy" "forge_team_staging_access" {
   name        = "forge_staging_s3-access"
   description = "Allow read + write to staging bucket"
 
@@ -31,19 +25,21 @@ resource "aws_iam_policy" "forge_staging_s3_access" {
           "s3:GetObject"
         ]
         Resource = "${aws_s3_bucket.federated_forge_staging_bkt.arn}/*"
-      }
+      },
 
+      {
+        Effect = "Allow"
+        Action = [
+          "ssm:GetParameter"
+        ]
+        Resource = "arn:aws:ssm:eu-central-1:049417293525:parameter/production/google-service-account/credentials"
+      }
+      # The SSM parameter seems to belong to prod
     ]
   })
 }
 
-
-resource "aws_iam_user_policy_attachment" "forge_staging_user_s3_policy" {
-  user       = aws_iam_user.forge_staging_system_user.name
-  policy_arn = aws_iam_policy.forge_staging_s3_access.arn
-}
-
-resource "aws_iam_group_policy_attachment" "forge_team_s3_policy" {
+resource "aws_iam_group_policy_attachment" "forge_team_staging_policy" {
   group      = data.aws_iam_group.forge_team.group_name
-  policy_arn = aws_iam_policy.forge_staging_s3_access.arn
+  policy_arn = aws_iam_policy.forge_team_staging_access.arn
 }
