@@ -19,13 +19,11 @@ variable "environment" {
 variable "bucket-use-case" {
   description = "Use case of the bucket (e.g. logs, data-lake, sftp)"
   type        = string
-  default     = "airflow"
 }
 
 variable "service" {
   description = "The service using the bucket (e.g. airflow, lambda, glue, sagemaker, ec2, etc.)"
   type        = string
-  default     = "airflow"
 }
 
 variable "versioning" {
