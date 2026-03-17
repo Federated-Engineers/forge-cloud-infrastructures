@@ -1,4 +1,3 @@
-
 data "aws_iam_group" "forge_team" {
   group_name = "forge-data-engineers"
 }

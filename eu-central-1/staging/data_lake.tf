@@ -9,5 +9,3 @@ module "forge_data_lake" {
 }
 
 
-
-
