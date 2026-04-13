@@ -23,3 +23,17 @@ module "bz_sftp_bucket" {
   service         = "transfer-family"
   versioning      = "Enabled"
 }
+
+# -------------------------------------------------------------
+# S3 ENCRYPTION — Objects encrypted at rest
+# -------------------------------------------------------------
+resource "aws_s3_bucket_server_side_encryption_configuration" "bz_sftp_bucket_encryption" {
+  bucket = module.bz_sftp_bucket.bucket_name
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
+}
+
