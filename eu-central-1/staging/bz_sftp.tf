@@ -10,6 +10,10 @@
 #   SSH Key — partner's public key for authentication
 # =============================================================
 
+# -------------------------------------------------------------
+# DATA SOURCE — Current AWS account identity
+# -------------------------------------------------------------
+data "aws_caller_identity" "current" {}
 
 # -------------------------------------------------------------
 # S3 BUCKET — Dedicated SFTP file exchange
