@@ -203,3 +203,22 @@ resource "aws_iam_role_policy" "bz_sftp_user_s3_policy" {
   })
 }
 
+# -------------------------------------------------------------
+# AWS TRANSFER FAMILY SFTP SERVER
+# -------------------------------------------------------------
+resource "aws_transfer_server" "bz_sftp" {
+  protocols              = ["SFTP"]
+  domain                 = "S3"
+  identity_provider_type = "SERVICE_MANAGED"
+  security_policy_name   = "TransferSecurityPolicy-2025-03"
+  logging_role           = aws_iam_role.bz_sftp_logging_role.arn
+
+  structured_log_destinations = [
+    "${aws_cloudwatch_log_group.bz_sftp_logs.arn}:*"
+  ]
+
+  tags = merge(local.common_tags, {
+    Name = "bz-sftp-${var.environment}"
+  })
+}
+
