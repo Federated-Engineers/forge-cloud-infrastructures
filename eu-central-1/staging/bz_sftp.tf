@@ -49,3 +49,34 @@ resource "aws_s3_bucket_public_access_block" "bz_sftp_bucket_public_access" {
   restrict_public_buckets = true
 }
 
+# -------------------------------------------------------------
+# S3 LIFECYCLE
+# -------------------------------------------------------------
+resource "aws_s3_bucket_lifecycle_configuration" "bz_sftp_bucket_lifecycle" {
+  bucket = module.bz_sftp_bucket.bucket_name
+
+  rule {
+    id     = "bz-sftp-file-retention"
+    status = "Enabled"
+
+    filter {}
+
+    transition {
+      days          = 30
+      storage_class = "STANDARD_IA"
+    }
+
+    expiration {
+      days = 90
+    }
+
+    noncurrent_version_expiration {
+      noncurrent_days = 7
+    }
+
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 3
+    }
+  }
+}
+
