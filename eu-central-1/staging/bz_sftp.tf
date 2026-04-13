@@ -118,3 +118,24 @@ resource "aws_iam_role" "bz_sftp_logging_role" {
   tags = local.common_tags
 }
 
+resource "aws_iam_role_policy" "bz_sftp_logging_policy" {
+  name = "bz-sftp-logging-policy"
+  role = aws_iam_role.bz_sftp_logging_role.name
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "logs:CreateLogStream",
+          "logs:DescribeLogStreams",
+          "logs:PutLogEvents"
+        ]
+
+        Resource = "${aws_cloudwatch_log_group.bz_sftp_logs.arn}:*"
+      }
+    ]
+  })
+}
+
