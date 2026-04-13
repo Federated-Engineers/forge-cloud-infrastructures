@@ -222,3 +222,21 @@ resource "aws_transfer_server" "bz_sftp" {
   })
 }
 
+# -------------------------------------------------------------
+# SFTP USER — Repair Partner
+# -------------------------------------------------------------
+resource "aws_transfer_user" "bz_repair_partner" {
+  server_id = aws_transfer_server.bz_sftp.id
+  user_name = "bz-repair-partner"
+  role      = aws_iam_role.bz_sftp_user_role.arn
+
+  home_directory_type = "LOGICAL"
+
+  home_directory_mappings {
+    entry  = "/"
+    target = "/${module.bz_sftp_bucket.bucket_name}/bieler-zeitwerk"
+  }
+
+  tags = local.common_tags
+}
+
