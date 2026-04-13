@@ -170,3 +170,36 @@ resource "aws_iam_role" "bz_sftp_user_role" {
 
   tags = local.common_tags
 }
+
+resource "aws_iam_role_policy" "bz_sftp_user_s3_policy" {
+  name = "bz-sftp-user-s3-policy"
+  role = aws_iam_role.bz_sftp_user_role.name
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = ["s3:ListBucket"]
+        Resource = module.bz_sftp_bucket.arn
+        Condition = {
+          StringLike = {
+            "s3:prefix" = [
+              "bieler-zeitwerk/",
+              "bieler-zeitwerk/*"
+            ]
+          }
+        }
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:GetObject",
+          "s3:GetObjectVersion"
+        ]
+        Resource = "${module.bz_sftp_bucket.arn}/bieler-zeitwerk/*"
+      }
+    ]
+  })
+}
+
