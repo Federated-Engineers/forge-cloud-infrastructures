@@ -80,3 +80,13 @@ resource "aws_s3_bucket_lifecycle_configuration" "bz_sftp_bucket_lifecycle" {
   }
 }
 
+# -------------------------------------------------------------
+# CLOUDWATCH LOG GROUP
+# -------------------------------------------------------------
+resource "aws_cloudwatch_log_group" "bz_sftp_logs" {
+  name              = "/aws/transfer/bz-sftp-${var.environment}"
+  retention_in_days = 90
+
+  tags = local.common_tags
+}
+
