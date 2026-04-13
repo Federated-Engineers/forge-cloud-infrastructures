@@ -143,3 +143,30 @@ resource "aws_iam_role_policy" "bz_sftp_logging_policy" {
   })
 }
 
+# -------------------------------------------------------------
+# IAM ROLE — transfer family to S3
+# -------------------------------------------------------------
+resource "aws_iam_role" "bz_sftp_user_role" {
+  name = "bz-sftp-user-role-${var.environment}"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect    = "Allow"
+        Principal = { Service = "transfer.amazonaws.com" }
+        Action    = "sts:AssumeRole"
+        Condition = {
+          StringEquals = {
+            "aws:SourceAccount" = data.aws_caller_identity.current.account_id
+          }
+          ArnLike = {
+            "aws:SourceArn" = "arn:aws:transfer:${var.region}:${data.aws_caller_identity.current.account_id}:server/*"
+          }
+        }
+      }
+    ]
+  })
+
+  tags = local.common_tags
+}
