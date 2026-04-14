@@ -49,9 +49,23 @@ resource "aws_iam_role_policy" "bz_sftp_user_s3_policy" {
 }
 
 resource "aws_transfer_server" "bz_sftp" {
-
-  tags = merge(local.common_tags, {
-    Name = "bz-sftp-${var.environment}"
-  })
+  protocols              = ["SFTP"]
+  
+  tags = local.common_tags
 }
 
+
+resource "aws_transfer_user" "rhine_valley_repair" {
+  server_id = aws_transfer_server.bz_sftp.id
+  user_name = "rhine-valley-repair"
+  role      = aws_iam_role.bz_sftp_user_role.arn
+
+  home_directory_type = "LOGICAL"
+
+  home_directory_mappings {
+    entry  = "/"
+    target = "/${module.bz_sftp_bucket.bucket_name}/bieler-zeitwerk"
+  }
+
+  tags = local.common_tags
+}
