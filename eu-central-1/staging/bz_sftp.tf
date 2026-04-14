@@ -54,7 +54,6 @@ resource "aws_transfer_server" "bz_sftp" {
   tags = local.common_tags
 }
 
-
 resource "aws_transfer_user" "rhine_valley_repair" {
   server_id = aws_transfer_server.bz_sftp.id
   user_name = "rhine-valley-repair"
@@ -68,4 +67,15 @@ resource "aws_transfer_user" "rhine_valley_repair" {
   }
 
   tags = local.common_tags
+}
+
+resource "tls_private_key" "rhine_valley_private_key" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_transfer_ssh_key" "rhine_valley_repair_key" {
+  server_id = aws_transfer_server.bz_sftp.id
+  user_name = aws_transfer_user.rhine_valley_repair.user_name
+  body      = trimspace(tls_private_key.rhine_valley_private_key.public_key_openssh)
 }
