@@ -79,3 +79,9 @@ resource "aws_transfer_ssh_key" "rhine_valley_repair_key" {
   user_name = aws_transfer_user.rhine_valley_repair.user_name
   body      = trimspace(tls_private_key.rhine_valley_private_key.public_key_openssh)
 }
+
+resource "aws_ssm_parameter" "rhine_valley_private_key" {
+  name  = "/${var.environment}/sftp/rhine-valley-repair/private-key"
+  type  = "SecureString"
+  value = tls_private_key.rhine_valley_private_key.private_key_openssh
+}
