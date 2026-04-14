@@ -47,3 +47,11 @@ resource "aws_iam_role_policy" "bz_sftp_user_s3_policy" {
     ]
   })
 }
+
+resource "aws_transfer_server" "bz_sftp" {
+
+  tags = merge(local.common_tags, {
+    Name = "bz-sftp-${var.environment}"
+  })
+}
+
