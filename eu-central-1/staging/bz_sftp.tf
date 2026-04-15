@@ -51,7 +51,8 @@ resource "aws_iam_role_policy" "bz_sftp_user_s3_policy" {
 resource "aws_transfer_server" "bz_sftp" {
   protocols              = ["SFTP"]
 
-  tags = local.common_tags
+  tags = merge(local.common_tags, 
+  {Owner = "Bieler Zeitwerk"})
 }
 
 resource "aws_transfer_user" "rhine_valley_repair" {
@@ -66,22 +67,16 @@ resource "aws_transfer_user" "rhine_valley_repair" {
     target = "/${module.bz_sftp_bucket.bucket_name}/bieler-zeitwerk"
   }
 
-  tags = local.common_tags
+  tags = merge(local.common_tags, 
+  {Owner = "Rhine Valley"})
 }
 
-resource "tls_private_key" "rhine_valley_private_key" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
+data "aws_ssm_parameter" "rhine_valley_public_key" {
+  name = "/${var.environment}/sftp/rhine-valley-repair/public-key"
 }
 
 resource "aws_transfer_ssh_key" "rhine_valley_repair_key" {
   server_id = aws_transfer_server.bz_sftp.id
   user_name = aws_transfer_user.rhine_valley_repair.user_name
-  body      = trimspace(tls_private_key.rhine_valley_private_key.public_key_openssh)
-}
-
-resource "aws_ssm_parameter" "rhine_valley_private_key" {
-  name  = "/${var.environment}/sftp/rhine-valley-repair/private-key"
-  type  = "SecureString"
-  value = tls_private_key.rhine_valley_private_key.private_key_openssh
+  body      = data.aws_ssm_parameter.rhine_valley_public_key.value
 }
