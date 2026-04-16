@@ -72,7 +72,7 @@ resource "aws_transfer_user" "rhine_valley_repair" {
 }
 
 data "aws_ssm_parameter" "rhine_valley_public_key" {
-  name = "/${var.environment}/sftp/rhine-valley-repair/public-key"
+  name = "/${var.environment}/${var.team}/sftp/rhine-valley-repair/public-key"
 }
 
 resource "aws_transfer_ssh_key" "rhine_valley_repair_key" {
