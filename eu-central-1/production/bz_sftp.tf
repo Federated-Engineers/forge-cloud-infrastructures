@@ -49,10 +49,11 @@ resource "aws_iam_role_policy" "bz_sftp_user_s3_policy" {
 }
 
 resource "aws_transfer_server" "bz_sftp" {
-  protocols              = ["SFTP"]
+  protocols = ["SFTP"]
 
-  tags = merge(local.common_tags, 
-  {Owner = "Bieler Zeitwerk"})
+  tags = merge(local.common_tags, {
+    Owner = "Bieler Zeitwerk"
+  })
 }
 
 resource "aws_transfer_user" "rhine_valley_repair" {
