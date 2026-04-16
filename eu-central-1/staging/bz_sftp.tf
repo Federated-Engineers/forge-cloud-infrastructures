@@ -70,3 +70,13 @@ resource "aws_transfer_user" "rhine_valley_repair" {
   tags = merge(local.common_tags, 
   {Owner = "Rhine Valley"})
 }
+
+data "aws_ssm_parameter" "rhine_valley_public_key" {
+  name = "/${var.environment}/sftp/rhine-valley-repair/public-key"
+}
+
+resource "aws_transfer_ssh_key" "rhine_valley_repair_key" {
+  server_id = aws_transfer_server.bz_sftp.id
+  user_name = aws_transfer_user.rhine_valley_repair.user_name
+  body      = data.aws_ssm_parameter.rhine_valley_public_key.value
+}
