@@ -68,8 +68,8 @@ resource "aws_transfer_user" "rhine_valley_repair" {
     target = "/${module.bz_sftp_bucket.bucket_name}/bieler-zeitwerk"
   }
 
-  tags = merge(local.common_tags, 
-  {Owner = "Rhine Valley"})
+  tags = merge(local.common_tags,
+  { Owner = "Rhine Valley" })
 }
 
 data "aws_ssm_parameter" "rhine_valley_public_key" {
