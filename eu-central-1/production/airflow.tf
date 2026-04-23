@@ -14,7 +14,9 @@ resource "aws_iam_policy" "forge_airflow_policy" {
         ]
         Resource = [
           module.bz_sftp_bucket.arn,
-          "${module.bz_sftp_bucket.arn}/*"
+          "${module.bz_sftp_bucket.arn}/*",
+          module.bbss_weather_bucket.arn,
+          "${module.bbss_weather_bucket.arn}/*",
         ]
       },
 
