@@ -13,7 +13,7 @@ resource "aws_iam_policy" "forge_airflow_policy" {
           "s3:*Object*"
         ]
         Resource = [
-
+          "arn:aws:s3:::baltilogix-raw-ingestion"
         ]
       },
 
