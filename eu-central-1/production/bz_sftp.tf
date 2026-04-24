@@ -47,3 +47,37 @@ resource "aws_iam_role_policy" "bz_sftp_user_s3_policy" {
     ]
   })
 }
+
+resource "aws_transfer_server" "bz_sftp" {
+  protocols = ["SFTP"]
+
+  tags = merge(local.common_tags, {
+    Owner = "Bieler Zeitwerk"
+  })
+}
+
+resource "aws_transfer_user" "rhine_valley_repair" {
+  server_id = aws_transfer_server.bz_sftp.id
+  user_name = "rhine-valley-repair"
+  role      = aws_iam_role.bz_sftp_user_role.arn
+
+  home_directory_type = "LOGICAL"
+
+  home_directory_mappings {
+    entry  = "/"
+    target = "/${module.bz_sftp_bucket.bucket_name}/bieler-zeitwerk"
+  }
+
+  tags = merge(local.common_tags,
+  { Owner = "Rhine Valley" })
+}
+
+data "aws_ssm_parameter" "public_key" {
+  name = "/${var.environment}/${var.team}/sftp/rhine-valley-repair/public-key"
+}
+
+resource "aws_transfer_ssh_key" "rhine_valley_repair_key" {
+  server_id = aws_transfer_server.bz_sftp.id
+  user_name = aws_transfer_user.rhine_valley_repair.user_name
+  body      = data.aws_ssm_parameter.public_key.value
+}
