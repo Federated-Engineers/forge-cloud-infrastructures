@@ -17,6 +17,7 @@ resource "aws_iam_policy" "forge_airflow_policy" {
           "${module.bz_sftp_bucket.arn}/*",
           module.bbss_weather_bucket.arn,
           "${module.bbss_weather_bucket.arn}/*",
+          "arn:aws:s3:::baltilogix-raw-ingestion"
         ]
       },
 
