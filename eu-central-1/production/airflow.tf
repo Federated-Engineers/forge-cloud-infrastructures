@@ -13,8 +13,8 @@ resource "aws_iam_policy" "forge_airflow_policy" {
           "s3:*Object*"
         ]
         Resource = [
-          module.bz_sftp_bucket.arn,
-          "${module.bz_sftp_bucket.arn}/*"
+          "arn:aws:s3:::baltilogix-raw-ingestion",
+          "arn:aws:s3:::federated-engineers-production-forge-bbss-forecasts",
         ]
       },
 
