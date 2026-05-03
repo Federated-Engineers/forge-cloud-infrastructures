@@ -13,8 +13,8 @@ resource "aws_ssm_parameter" "redshift_master_password" {
 resource "aws_redshift_cluster" "lief_holdings" {
   cluster_identifier  = "lief-holdings-predictive-pricing"
   database_name       = "pricing_db"
-  master_username     = "exampleuser"
-  master_password     = "Mustbe8characters"
+  master_username     = var.redshift_master_username
+  master_password     = aws_ssm_parameter.redshift_master_password.value
   node_type           = "ra3.large"
   cluster_type        = "single-node"
   publicly_accessible = true
