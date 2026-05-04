@@ -124,6 +124,29 @@ resource "aws_redshift_subnet_group" "lief_holdings" {
   tags = merge(local.common_tags)
 }
 
+resource "aws_security_group" "redshift_sg" {
+  name        = "lief-holdings-redshift-sg"
+  description = "Security group for Lief Holdings Redshift cluster"
+  vpc_id      = data.aws_subnet.public_a.vpc_id
+
+  tags = merge(local.common_tags)
+}
+
+resource "aws_vpc_security_group_ingress_rule" "redshift_ingress" {
+  security_group_id = aws_security_group.redshift_sg.id
+  description       = "Allow inbound Redshift traffic"
+  from_port         = 5439
+  to_port           = 5439
+  ip_protocol       = "tcp"
+}
+
+resource "aws_vpc_security_group_egress_rule" "redshift_egress" {
+  security_group_id = aws_security_group.redshift_sg.id
+  description       = "Allow all outbound traffic"
+  ip_protocol       = "-1"
+  cidr_ipv4         = "0.0.0.0/0"
+}
+
 resource "aws_redshift_cluster" "lief_holdings_redshift" {
   cluster_identifier           = "lief-holdings-predictive-pricing"
   database_name                = "pricing_db"
@@ -135,6 +158,7 @@ resource "aws_redshift_cluster" "lief_holdings_redshift" {
   iam_roles                    = [aws_iam_role.lief_holdings_redshift.arn]
   cluster_parameter_group_name = aws_redshift_parameter_group.lief_holdings_group.name
   cluster_subnet_group_name    = aws_redshift_subnet_group.lief_holdings.name
+  vpc_security_group_ids       = [aws_security_group.redshift_sg.id]
 
   tags = merge(local.common_tags, { client = "lief-holdings" })
 }
