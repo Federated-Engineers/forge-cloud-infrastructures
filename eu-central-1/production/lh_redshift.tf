@@ -109,11 +109,11 @@ resource "aws_redshift_parameter_group" "lief_holdings_group" {
 }
 
 data "aws_subnet" "public_a" {
-  id = var.public_subnet_a
+  id = "subnet-0613b8ccd258f4cca"
 }
 
 data "aws_subnet" "public_b" {
-  id = var.public_subnet_b
+  id = "subnet-0af2d376a426b58bb"
 }
 
 resource "aws_redshift_subnet_group" "lief_holdings" {
