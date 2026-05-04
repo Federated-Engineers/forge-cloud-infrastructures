@@ -108,15 +108,33 @@ resource "aws_redshift_parameter_group" "lief_holdings_group" {
   }
 }
 
-resource "aws_redshift_cluster" "lief_holdings" {
-  cluster_identifier  = "lief-holdings-predictive-pricing"
-  database_name       = "pricing_db"
-  master_username     = var.redshift_master_username
-  master_password     = aws_ssm_parameter.redshift_master_password.value
-  node_type           = "ra3.large"
-  cluster_type        = "single-node"
-  publicly_accessible = true
-  iam_roles           = [aws_iam_role.lief_holdings_redshift.arn]
+data "aws_subnet" "public_a" {
+  id = var.public_subnet_a
+}
+
+data "aws_subnet" "public_b" {
+  id = var.public_subnet_b
+}
+
+resource "aws_redshift_subnet_group" "lief_holdings" {
+  name        = "lief-holdings-subnet-group"
+  description = "Subnet group for Lief Holdings Redshift cluster"
+  subnet_ids  = [data.aws_subnet.public_a.id, data.aws_subnet.public_b.id]
+
+  tags = merge(local.common_tags)
+}
+
+resource "aws_redshift_cluster" "lief_holdings_redshift" {
+  cluster_identifier           = "lief-holdings-predictive-pricing"
+  database_name                = "pricing_db"
+  master_username              = var.redshift_master_username
+  master_password              = aws_ssm_parameter.redshift_master_password.value
+  node_type                    = "ra3.large"
+  cluster_type                 = "single-node"
+  publicly_accessible          = true
+  iam_roles                    = [aws_iam_role.lief_holdings_redshift.arn]
+  cluster_parameter_group_name = aws_redshift_parameter_group.lief_holdings_group.name
+  cluster_subnet_group_name    = aws_redshift_subnet_group.lief_holdings.name
 
   tags = merge(local.common_tags, { client = "lief-holdings" })
 }
