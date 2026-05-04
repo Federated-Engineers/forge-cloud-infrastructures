@@ -138,6 +138,7 @@ resource "aws_vpc_security_group_ingress_rule" "redshift_ingress" {
   from_port         = 5439
   to_port           = 5439
   ip_protocol       = "tcp"
+  cidr_ipv4         = "0.0.0.0/0"
 }
 
 resource "aws_vpc_security_group_egress_rule" "redshift_egress" {
