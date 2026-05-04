@@ -127,7 +127,7 @@ resource "aws_redshift_subnet_group" "lief_holdings" {
 resource "aws_redshift_cluster" "lief_holdings_redshift" {
   cluster_identifier           = "lief-holdings-predictive-pricing"
   database_name                = "pricing_db"
-  master_username              = var.redshift_master_username
+  master_username              = "lief_admin"
   master_password              = aws_ssm_parameter.redshift_master_password.value
   node_type                    = "ra3.large"
   cluster_type                 = "single-node"

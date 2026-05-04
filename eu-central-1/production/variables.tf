@@ -21,9 +21,3 @@ variable "project" {
   type        = string
   default     = "Federated-Engineers"
 }
-
-variable "redshift_master_username" {
-  description = "Master username for the Lief Holdings Redshift cluster"
-  type        = string
-  default     = "lief_admin"
-}
