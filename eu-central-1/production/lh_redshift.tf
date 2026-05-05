@@ -31,7 +31,7 @@ resource "aws_iam_role" "lief_holdings_redshift" {
 }
 
 resource "aws_redshift_parameter_group" "lief_holdings_group" {
-  name   = "parameter-group-lief-holdings-terraform"
+  name   = "parameter-group-lief-holdings"
   family = "redshift-1.0"
 
   parameter {
@@ -40,23 +40,21 @@ resource "aws_redshift_parameter_group" "lief_holdings_group" {
   }
 
   parameter {
-    name  = "enable_user_activity_logging"
-    value = "true"
-  }
-
-  parameter {
     name = "wlm_json_configuration"
-    value = jsonencode([{
-      short_query_queue = true
+    value = jsonencode([
+      {
+        name              = "Short Query Acceleration"
+        short_query_queue = true
       },
       {
-        name                  = "ETL Queue"
-        memory_percent_to_use = 40
-        query_concurrency     = 3
-        user_group            = ["etl_users"]
+        name       = "ETL Queue"
+        auto_wlm   = true
+        queue_type = "auto"
+        priority   = "high"
+        user_group = ["etl_users"]
         rules = [
           {
-            rule_name = "abort_large_scan"
+            rule_name = "log_large_etl_scan"
             predicate = [
               {
                 metric_name = "query_blocks_read"
@@ -64,15 +62,16 @@ resource "aws_redshift_parameter_group" "lief_holdings_group" {
                 value       = 2097152
               }
             ]
-            action = "abort"
+            action = "log"
           }
         ]
       },
       {
-        name                  = "Analyst/Ad-Hoc Queue"
-        memory_percent_to_use = 60
-        query_concurrency     = 5
-        concurrency_scaling   = "auto"
+        name                = "Analyst/Ad-Hoc Queue"
+        auto_wlm            = true
+        queue_type          = "auto"
+        concurrency_scaling = "auto"
+        user_group          = ["analysts"]
         rules = [
           {
             rule_name = "abort_large_scan"
@@ -160,6 +159,7 @@ resource "aws_redshift_cluster" "lief_holdings_redshift" {
   cluster_parameter_group_name = aws_redshift_parameter_group.lief_holdings_group.name
   cluster_subnet_group_name    = aws_redshift_subnet_group.lief_holdings.name
   vpc_security_group_ids       = [aws_security_group.redshift_sg.id]
+  preferred_maintenance_window = "sat:01:00-sat:03:00"
 
   tags = merge(local.common_tags, { client = "lief-holdings" })
 }
