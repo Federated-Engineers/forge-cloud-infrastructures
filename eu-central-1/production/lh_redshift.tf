@@ -160,6 +160,7 @@ resource "aws_redshift_cluster" "lief_holdings_redshift" {
   cluster_subnet_group_name    = aws_redshift_subnet_group.lief_holdings.name
   vpc_security_group_ids       = [aws_security_group.redshift_sg.id]
   preferred_maintenance_window = "sat:01:00-sat:03:00"
+  skip_final_snapshot          = true
 
   tags = merge(local.common_tags, { client = "lief-holdings" })
 }
