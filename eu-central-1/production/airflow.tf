@@ -15,6 +15,7 @@ resource "aws_iam_policy" "forge_airflow_policy" {
         Resource = [
           "arn:aws:s3:::baltilogix-raw-ingestion",
           "arn:aws:s3:::federated-engineers-production-forge-bbss-forecasts",
+          "arn:aws:s3:::federated-engineers-production-forge-bbss-forecasts/*"
         ]
       },
 
