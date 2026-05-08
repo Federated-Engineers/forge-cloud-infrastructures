@@ -12,13 +12,13 @@ resource "aws_iam_policy" "forge-team-generic-access" {
     Statement = [
       {
         Effect   = "Allow"
-        Action = ["s3:ListBucket"]
+        Action   = ["s3:ListBucket"]
         Resource = [module.forge_data_lake.arn]
       },
 
       {
-        Effect = "Allow"
-        Action = ["s3:*Object"]
+        Effect   = "Allow"
+        Action   = ["s3:*Object"]
         Resource = "${module.forge_data_lake.arn}/*"
       },
 
@@ -28,8 +28,24 @@ resource "aws_iam_policy" "forge-team-generic-access" {
           "ssm:GetParameter"
         ]
         Resource = "arn:aws:ssm:eu-central-1:049417293525:parameter/production/google-service-account/credentials"
+      },
+      {
+        Sid    = "GlueActions"
+        Effect = "Allow"
+        Action = [
+          "glue:*"
+        ]
+        Resource = ["*"]
+      },
+      {
+        Sid    = "DenyGlueCrawlersAndJobs"
+        Effect = "Deny"
+        Action = [
+          "glue:*Crawler*",
+          "glue:*Job*"
+        ]
+        Resource = ["*"]
       }
-
     ]
   })
 }
