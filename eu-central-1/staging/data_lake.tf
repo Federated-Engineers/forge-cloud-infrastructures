@@ -8,4 +8,3 @@ module "forge_data_lake" {
   versioning      = var.versioning
 }
 
-
