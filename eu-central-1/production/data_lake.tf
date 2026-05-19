@@ -19,3 +19,13 @@ module "glaciair_sync_bucket" {
   service         = "airflow"
   versioning      = "Enabled"
 }
+
+module "cocosurf_tfstate_bucket" {
+  source = "../modules/s3-bucket"
+
+  environment     = var.environment
+  team            = "forge"
+  bucket-use-case = "cocosurf-gear-terraform-state"
+  service         = "Terraform"
+  versioning      = "Enabled"
+}
