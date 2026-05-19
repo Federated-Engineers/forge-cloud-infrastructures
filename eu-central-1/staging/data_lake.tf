@@ -8,13 +8,3 @@ module "forge_data_lake" {
   versioning      = var.versioning
 }
 
-module "cocosurf_tfstate_bucket" {
-  source = "../modules/s3-bucket"
-
-  environment     = var.environment
-  team            = "cocosurf-gear"
-  bucket-use-case = "terraform-statefile"
-  service         = "Terraform"
-  versioning      = var.versioning
-}
-
