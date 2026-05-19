@@ -25,7 +25,7 @@ module "cocosurf_tfstate_bucket" {
 
   environment     = var.environment
   team            = "forge"
-  bucket-use-case = "cocosurf-gear-terraform-state"
+  bucket-use-case = "cocosurf-gear-tf-state"
   service         = "Terraform"
   versioning      = "Enabled"
 }
