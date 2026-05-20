@@ -29,3 +29,13 @@ module "cocosurf_tfstate_bucket" {
   service         = "Terraform"
   versioning      = "Enabled"
 }
+
+module "angel_city_health_tfstate_bucket" {
+  source = "../modules/s3-bucket"
+
+  environment     = var.environment
+  team            = "forge"
+  bucket-use-case = "angel-city-health-tf-state"
+  service         = "Terraform"
+  versioning      = "Enabled"
+}
