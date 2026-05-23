@@ -8,3 +8,12 @@ module "forge_data_lake" {
   versioning      = var.versioning
 }
 
+module "lonestar_tfstate" {
+  source = "../modules/s3-bucket"
+
+  environment     = var.environment
+  team            = "forge"
+  bucket-use-case = "lonestar-tf-state"
+  service         = "Terraform"
+  versioning      = "Enabled"
+}
