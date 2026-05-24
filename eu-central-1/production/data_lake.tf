@@ -29,3 +29,14 @@ module "cocosurf_tfstate_bucket" {
   service         = "Terraform"
   versioning      = "Enabled"
 }
+
+
+module "cgs_tfstate_bucket" {
+  source = "../modules/s3-bucket"
+
+  environment     = var.environment
+  team            = "forge"
+  bucket-use-case = "cgs-terraform-state"
+  service         = "Terraform"
+  versioning      = "Enabled"
+}
