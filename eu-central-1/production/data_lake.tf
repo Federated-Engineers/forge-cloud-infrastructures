@@ -30,7 +30,7 @@ module "cocosurf_tfstate_bucket" {
   versioning      = "Enabled"
 }
 
-module "ls_tfstate_bucket" {
+module "lonestar_tfstate_bucket" {
   source = "../modules/s3-bucket"
 
   environment     = var.environment
