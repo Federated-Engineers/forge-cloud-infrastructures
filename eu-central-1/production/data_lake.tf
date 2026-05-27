@@ -30,12 +30,13 @@ module "cocosurf_tfstate_bucket" {
   versioning      = "Enabled"
 }
 
-module "lonestar_tfstate_bucket" {
+
+module "cgs_tfstate_bucket" {
   source = "../modules/s3-bucket"
 
   environment     = var.environment
   team            = "forge"
-  bucket-use-case = "lonestar-tf-state"
+  bucket-use-case = "cgs-terraform-state"
   service         = "Terraform"
   versioning      = "Enabled"
 }
