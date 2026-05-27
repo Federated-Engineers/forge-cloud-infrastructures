@@ -7,4 +7,3 @@ module "forge_data_lake" {
   service         = "airflow"
   versioning      = var.versioning
 }
-
