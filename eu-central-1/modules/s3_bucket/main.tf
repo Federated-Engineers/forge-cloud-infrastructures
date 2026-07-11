@@ -1,13 +1,18 @@
-resource "aws_s3_bucket" "s3_bucket" {
-  bucket = var.bucket_name
+resource "aws_s3_bucket" "federated-engineers-bucket" {
+  bucket = local("federated-${var.environment}-${var.team}-${var.bucket-use-case}")
 
-  tags = var.tags
+
+  tags = merge(local.common_tags, {
+    Name    = "federated-engineers-${var.environment}-${var.team}-${var.bucket-use-case}",
+    Service = var.service
+  })
 }
 
-resource "aws_s3_bucket_versioning" "bucket_versioning" {
-  bucket = aws_s3_bucket.s3_bucket.id
+
+resource "aws_s3_bucket_versioning" "versioning" {
+  bucket = aws_s3_bucket.federated-engineers-bucket.id
 
   versioning_configuration {
-    status = "Enabled"
+    status = var.versioning
   }
 }

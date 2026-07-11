@@ -1,5 +1,7 @@
 locals {
-  bucket_tags = merge(
-    var.tags
-  )
+  common_tags = {
+    team        = var.team
+    environment = var.environment
+    terraform   = true
+  }
 }

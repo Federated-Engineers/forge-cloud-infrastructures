@@ -1,16 +1,14 @@
-module "s3_bucket" {
-  source = "../modules/s3_bucket"
-
-  bucket_name = lower(
-    "federated-${var.team}-${var.environment}-scardinavas-bucket"
-  )
-
-  tags = local.common_tags
-
+module "scardinavas_bucket" {
+  source          = "../modules/s3_bucket"
+  team            = var.team
+  bucket-use-case = "Scardinavia-data-lake"
+  service         = "Athena"
+  versioning      = "Enabled"
+  environment     = var.environment
 }
 
 resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
-  bucket = module.s3_bucket.bucket_name
+  bucket = module.scardinavas_bucket.bucket_name
 
   rule {
     id     = "transition-to-glacier-instant-retrieval"
