@@ -2,7 +2,7 @@ module "scardinavas_bucket" {
   source          = "../modules/s3_bucket"
   team            = var.team
   bucket-use-case = "Scardinavas-data-lake"
-  service         = "Athena"
+  service         = "s3"
   versioning      = "Enabled"
   environment     = var.environment
 }
