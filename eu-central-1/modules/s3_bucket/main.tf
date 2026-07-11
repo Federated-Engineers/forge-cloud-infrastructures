@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "federated-engineers-bucket" {
-  bucket = local("federated-${var.environment}-${var.team}-${var.bucket-use-case}")
+  bucket = lower("federated-${var.environment}-${var.team}-${var.bucket-use-case}")
 
 
   tags = merge(local.common_tags, {
