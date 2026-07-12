@@ -30,13 +30,13 @@ resource "aws_iam_policy" "sftp_user_role_policy" {
         ],
         "Effect" : "Allow",
         "Resource" : [
-          "arn:aws:s3:::${aws_s3_bucket.transfer_family_bucket.id}"
+          "arn:aws:s3:::${module.alpenmechanik_bucket.bucket_name}"
         ],
         "Condition" : {
           "StringLike" : {
             "s3:prefix" : [
-              "${aws_s3_bucket.transfer_family_bucket.id}/*",
-              "${aws_s3_bucket.transfer_family_bucket.id}"
+              "${module.alpenmechanik_bucket.bucket_name}/*",
+              "${module.alpenmechanik_bucket.bucket_name}"
             ]
           }
         }
@@ -53,7 +53,7 @@ resource "aws_iam_policy" "sftp_user_role_policy" {
           "s3:GetObjectACL",
           "s3:PutObjectACL"
         ],
-        "Resource" : "arn:aws:s3:::${aws_s3_bucket.transfer_family_bucket.id}/*"
+        "Resource" : "arn:aws:s3:::${module.alpenmechanik_bucket.bucket_name}/*"
       }
     ]
     }
