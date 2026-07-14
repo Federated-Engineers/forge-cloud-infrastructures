@@ -21,3 +21,10 @@ variable "project" {
   type        = string
   default     = "Federated-Engineers"
 }
+
+variable "sftp_users" {
+  type = map(object({
+    user_name      = string
+    home_directory = string
+  }))
+}
