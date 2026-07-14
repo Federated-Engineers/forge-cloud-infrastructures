@@ -1,7 +1,7 @@
 resource "aws_iam_role" "sftp_user_role" {
   name        = "AlpenMechanik_SFTP_User_Role"
   description = "IAM role for SFTP users to access the S3 bucket through a Transfer Family Server"
-  path        = "/forge/alpenmechanik/sftp"
+  path        = "/forge/alpenmechanik/sftp/"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -19,7 +19,7 @@ resource "aws_iam_role" "sftp_user_role" {
 resource "aws_iam_policy" "sftp_user_role_policy" {
   name        = "AlpenMechanik_SFTP_User_Role_Policy"
   description = "IAM policy form SFTP users to access S3 Buckets objects through Transfer Family Server"
-  path        = "/forge/alpenmechanik/sftp"
+  path        = "/forge/alpenmechanik/sftp/"
   policy = jsonencode({
     "Version" : "2012-10-17",
     "Statement" : [
