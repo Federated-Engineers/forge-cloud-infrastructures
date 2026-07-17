@@ -25,9 +25,6 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
   }
 }
 
-
-
-
 module "bbss_bucket" {
   source          = "../modules/s3_bucket"
   team            = var.team
