@@ -9,10 +9,8 @@ resource "aws_iam_policy" "airflow_policy" {
         Sid    = "Readandwrite"
         Effect = "Allow"
         Action = [
-          "s3:*List*",
-          "s3:*Put*",
-          "s3:*Get*",
-                "s3:*object*"
+          "s3:List*",
+          "s3:*object*"
         ]
         Resource = [
           module.scardinavas_bucket.arn,
