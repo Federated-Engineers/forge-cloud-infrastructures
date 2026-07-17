@@ -20,7 +20,7 @@ resource "aws_iam_policy" "airflow_policy" {
         ]
       },
 
-        {
+      {
         Sid    = "ReadSSMParameters"
         Effect = "Allow"
         Action = [
