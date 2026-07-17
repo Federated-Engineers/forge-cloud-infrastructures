@@ -24,3 +24,12 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
     }
   }
 }
+
+module "mave-aqua-datalake" {
+  source          = "../modules/s3_bucket"
+  team            = var.team
+  bucket-use-case = "mave-aqua-data-lake"
+  service         = "s3"
+  versioning      = "Enabled"
+  environment     = var.environment
+}
