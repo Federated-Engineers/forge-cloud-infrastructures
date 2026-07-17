@@ -9,9 +9,7 @@ resource "aws_iam_policy" "airflow_policy" {
         Sid    = "Readandwrite"
         Effect = "Allow"
         Action = [
-          "s3:*List*",
-          "s3:*Put*",
-          "s3:*Get*",
+          "s3:List*",
           "s3:*object*"
         ]
         Resource = [
@@ -19,10 +17,6 @@ resource "aws_iam_policy" "airflow_policy" {
           "${module.scardinavas_bucket.arn}/*",
           module.bbss_bucket.arn,
           "${module.bbss_bucket.arn}/*",
-          module.mave-aqua-datalake.arn,
-          "${module.mave-aqua-datalake.arn}/*",
-          module.nordic-peaks-oslo.arn,
-          "${module.nordic-peaks-oslo.arn}/*"
         ]
       },
 
