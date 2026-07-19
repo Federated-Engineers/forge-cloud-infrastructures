@@ -33,3 +33,7 @@ module "mave-aqua-datalake" {
   versioning      = "Enabled"
   environment     = var.environment
 }
+
+resource "aws_glue_catalog_database" "mave_aqua_db" {
+  name = "mave_aqua"
+}
