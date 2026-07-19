@@ -29,6 +29,10 @@ module "mave-aqua-datalake" {
   source          = "../modules/s3_bucket"
   team            = var.team
   bucket-use-case = "mave-aqua-data-lake"
+
+  service     = "s3"
+  versioning  = "Enabled"
+  environment = var.environment
 }
 
 module "bbss_bucket" {
