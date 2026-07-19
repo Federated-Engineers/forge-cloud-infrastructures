@@ -29,6 +29,7 @@ module "mave-aqua-datalake" {
   source          = "../modules/s3_bucket"
   team            = var.team
   bucket-use-case = "mave-aqua-data-lake"
+}
 
 module "bbss_bucket" {
   source          = "../modules/s3_bucket"
