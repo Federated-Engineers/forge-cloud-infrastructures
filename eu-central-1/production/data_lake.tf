@@ -51,3 +51,13 @@ resource "aws_s3_bucket_lifecycle_configuration" "bbss_bucket_lifecycle" {
     }
   }
 }
+
+
+module "baltilogix_bucket" {
+  source          = "../modules/s3_bucket"
+  team            = var.team
+  environment     = var.environment
+  bucket-use-case = "Baltilogix_datalake"
+  service         = "s3"
+  versioning      = "Enabled"
+}

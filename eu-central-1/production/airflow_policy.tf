@@ -16,7 +16,9 @@ resource "aws_iam_policy" "airflow_policy" {
           module.scardinavas_bucket.arn,
           "${module.scardinavas_bucket.arn}/*",
           module.bbss_bucket.arn,
-          "${module.bbss_bucket.arn}/*"
+          "${module.bbss_bucket.arn}/*",
+          module.baltilogix_bucket.arn,
+          "${module.baltilogix_bucket.arn}/*"
         ]
       },
 
