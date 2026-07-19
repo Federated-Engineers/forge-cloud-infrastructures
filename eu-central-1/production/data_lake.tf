@@ -46,10 +46,6 @@ module "bbss_bucket" {
 }
 
 
-resource "aws_glue_catalog_database" "mave_aqua_db" {
-  name = "mave_aqua"
-}
-
 resource "aws_s3_bucket_lifecycle_configuration" "bbss_bucket_lifecycle" {
   bucket = module.bbss_bucket.bucket_name
 
