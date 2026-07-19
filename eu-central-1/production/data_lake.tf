@@ -36,9 +36,9 @@ module "bbss_bucket" {
   team            = var.team
   bucket-use-case = "BBSS-data-lake"
 
-  service         = "s3"
-  versioning      = "Enabled"
-  environment     = var.environment
+  service     = "s3"
+  versioning  = "Enabled"
+  environment = var.environment
 }
 
 
