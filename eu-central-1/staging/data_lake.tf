@@ -32,7 +32,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "nordic_peaks" {
     status = "Enabled"
 
     filter {
-      prefix = "landing/"
+      prefix = "landing_zone/"
     }
 
     transition {
