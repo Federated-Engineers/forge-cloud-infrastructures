@@ -6,7 +6,6 @@ module "scardinavas_bucket" {
   versioning      = "Enabled"
   environment     = var.environment
 }
-
 resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
   bucket = module.scardinavas_bucket.bucket_name
 
@@ -24,7 +23,6 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
     }
   }
 }
-
 module "mave-aqua-datalake" {
   source          = "../modules/s3_bucket"
   team            = var.team
@@ -34,7 +32,6 @@ module "mave-aqua-datalake" {
   versioning  = "Enabled"
   environment = var.environment
 }
-
 module "bbss_bucket" {
   source          = "../modules/s3_bucket"
   team            = var.team
@@ -44,8 +41,6 @@ module "bbss_bucket" {
   versioning  = "Enabled"
   environment = var.environment
 }
-
-
 resource "aws_s3_bucket_lifecycle_configuration" "bbss_bucket_lifecycle" {
   bucket = module.bbss_bucket.bucket_name
 
