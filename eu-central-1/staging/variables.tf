@@ -7,7 +7,7 @@ variable "region" {
 variable "team" {
   description = "The team responsible for the deployment"
   type        = string
-  default     = "forge"
+  default     = "Forge-Data-Engineers"
 }
 
 variable "environment" {
@@ -21,5 +21,3 @@ variable "versioning" {
   type        = string
   default     = "Disabled"
 }
-
-
