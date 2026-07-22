@@ -24,8 +24,7 @@ resource "aws_iam_policy" "airflow_policy" {
         Sid    = "ReadSSMParameters"
         Effect = "Allow"
         Action = [
-          "ssm:GetParameter",
-          "ssm:GetParameters"
+          "ssm:*GetParameter*",
         ]
         Resource = [
           "arn:aws:ssm:eu-central-1:049417293525:parameter/production/google-service-account/credentials",
