@@ -70,10 +70,10 @@ module "nordic-peaks-oslo" {
 # bucket lifecycle
 resource "aws_s3_bucket_lifecycle_configuration" "nordic_peaks" {
 
-  bucket =  module.nordic-peaks-oslo.bucket_name
+  bucket = module.nordic-peaks-oslo.bucket_name
 
   rule {
-    id = "transition-landing-zone-to-Glacier-IR"
+    id     = "transition-landing-zone-to-Glacier-IR"
     status = "Enabled"
 
     filter {
@@ -81,7 +81,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "nordic_peaks" {
     }
 
     transition {
-      days = 180
+      days          = 180
       storage_class = "GLACIER_IR"
     }
   }
