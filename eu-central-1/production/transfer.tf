@@ -21,11 +21,10 @@ resource "aws_transfer_server" "alpenmechanik_sftp_server" {
 }
 
 resource "aws_transfer_user" "alpenmechanik_sftp_user" {
-  for_each       = var.sftp_users
   server_id      = aws_transfer_server.alpenmechanik_sftp_server.id
-  user_name      = each.value.user_name
+  user_name      = "default"
   role           = aws_iam_role.sftp_user_role.arn
-  home_directory = "/${module.alpenmechanik_bucket.bucket_name}${each.value.home_directory}"
+  home_directory = "/${module.alpenmechanik_bucket.bucket_name}/default"
 
   tags = {
     Name        = "AlpenMechanik SFTP User"
@@ -35,8 +34,7 @@ resource "aws_transfer_user" "alpenmechanik_sftp_user" {
 }
 
 resource "aws_transfer_ssh_key" "alpenmechanik_sftp_users_ssh_key" {
-  for_each  = var.sftp_users
   server_id = aws_transfer_server.alpenmechanik_sftp_server.id
-  user_name = each.value.user_name
-  body      = trimspace(tls_private_key.rsa_ssh_key[each.key].public_key_openssh)
+  user_name = aws_transfer_user.alpenmechanik_sftp_user.user_name
+  body      = trimspace(tls_private_key.rsa_ssh_key.public_key_openssh)
 }
