@@ -1,5 +1,5 @@
-resource "aws_iam_policy" "airflow_policy" {
-  name        = "${var.team}-airflow-access-policy"
+resource "aws_iam_policy" "airflow_policy {
+  name        = "forge-airflow-access-policy"
   description = "Allow Airflow to access aws resources"
 
   policy = jsonencode({
