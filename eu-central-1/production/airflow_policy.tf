@@ -45,4 +45,3 @@ resource "aws_iam_policy" "airflow_policy" {
     ]
   })
 }
-
