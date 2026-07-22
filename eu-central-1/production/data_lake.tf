@@ -52,11 +52,6 @@ resource "aws_s3_bucket_lifecycle_configuration" "bbss_bucket_lifecycle" {
   }
 }
 
-
-# Nordic Peaks S3 bucket
-# This bucket is used to store data for the Nordic Peaks project. It has three main zones:
-# - Landing: where raw data is ingested
-# - Processed: where data is processed and transformed
 module "nordic-peaks-oslo" {
   source          = "../modules/s3_bucket"
   team            = var.team
@@ -66,8 +61,6 @@ module "nordic-peaks-oslo" {
   environment     = var.environment
 }
 
-
-# bucket lifecycle
 resource "aws_s3_bucket_lifecycle_configuration" "nordic_peaks" {
 
   bucket = module.nordic-peaks-oslo.bucket_name
