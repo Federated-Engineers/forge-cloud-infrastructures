@@ -1,5 +1,5 @@
 resource "aws_iam_policy" "airflow_policy" {
-  name        = "${var.team}-airflow-access-policy"
+  name        = "forge-airflow-access-policy"
   description = "Allow Airflow to access aws resources"
 
   policy = jsonencode({
@@ -27,7 +27,7 @@ resource "aws_iam_policy" "airflow_policy" {
         Effect = "Allow"
         Action = [
           "ssm:GetParameter",
-          "ssm:GetParameters"
+          "ssm:GetParameters",
         ]
         Resource = [
           "arn:aws:ssm:eu-central-1:049417293525:parameter/production/google-service-account/credentials",
@@ -48,4 +48,3 @@ resource "aws_iam_policy" "airflow_policy" {
     ]
   })
 }
-
