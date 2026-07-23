@@ -95,7 +95,7 @@ module "alpenmechanik_bucket" {
   versioning      = "Enabled"
   environment     = var.environment
 }
-  
+
 resource "aws_s3_bucket_lifecycle_configuration" "alpenmechanik_bucket_lifecycle" {
   bucket = module.alpenmechanik_bucket.bucket_name
 
