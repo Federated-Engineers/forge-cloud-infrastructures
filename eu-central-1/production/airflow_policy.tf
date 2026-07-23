@@ -18,6 +18,8 @@ resource "aws_iam_policy" "airflow_policy" {
           module.bbss_bucket.arn,
           "${module.bbss_bucket.arn}/*",
           "${module.alpenmechanik_bucket.arn}/*"
+          module.mave-aqua-datalake.arn,
+          "${module.mave-aqua-datalake.arn}/*"
         ]
       },
 
