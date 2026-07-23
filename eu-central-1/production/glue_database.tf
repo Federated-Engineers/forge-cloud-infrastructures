@@ -1,5 +1,5 @@
-resource "aws_glue_catalog_database" "scardinavas_db" {
-  name = "forge-production-scardinavas"
+resource "aws_glue_catalog_database" "forge-production-scardinavas" {
+  name = "scardinavas_db"
 
   tags = merge(local.common_tags, {
     Owner   = "scardinavas",
