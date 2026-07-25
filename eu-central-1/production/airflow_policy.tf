@@ -1,3 +1,7 @@
+data "aws_s3_bucket" "baltilogix_source_bucket" {
+  bucket = "baltilogix-raw-ingestion"
+}
+
 resource "aws_iam_policy" "airflow_policy" {
   name        = "forge-airflow-access-policy"
   description = "Allow Airflow to access aws resources"
@@ -19,7 +23,9 @@ resource "aws_iam_policy" "airflow_policy" {
           "${module.bbss_bucket.arn}/*",
           "${module.alpenmechanik_bucket.arn}/*",
           module.mave-aqua-datalake.arn,
-          "${module.mave-aqua-datalake.arn}/*"
+          "${module.mave-aqua-datalake.arn}/*",
+          data.aws_s3_bucket.baltilogix_source_bucket.arn,
+          "${data.aws_s3_bucket.baltilogix_source_bucket.arn}/*"
         ]
       },
 
