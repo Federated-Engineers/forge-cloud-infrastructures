@@ -24,7 +24,9 @@ resource "aws_iam_policy" "airflow_policy" {
           module.baltilogix_bucket.arn,
           "${module.baltilogix_bucket.arn}/*",
           "arn:aws:s3:::baltilogix-raw-ingestion",
-          "arn:aws:s3:::baltilogix-raw-ingestion/*"
+          "arn:aws:s3:::baltilogix-raw-ingestion/*",
+          module.nordic-peaks-oslo.arn,
+          "${module.nordic-peaks-oslo.arn}/*",
         ]
       },
 
