@@ -21,6 +21,8 @@ resource "aws_iam_policy" "airflow_policy" {
           "${module.alpenmechanik_bucket.arn}/*",
           module.mave-aqua-datalake.arn,
           "${module.mave-aqua-datalake.arn}/*",
+          module.baltilogix_bucket.arn,
+          "${module.baltilogix_bucket.arn}/*",
           "arn:aws:s3:::baltilogix-raw-ingestion",
           "arn:aws:s3:::baltilogix-raw-ingestion/*"
         ]
