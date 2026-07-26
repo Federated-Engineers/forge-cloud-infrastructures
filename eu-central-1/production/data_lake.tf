@@ -113,3 +113,12 @@ resource "aws_s3_bucket_lifecycle_configuration" "alpenmechanik_bucket_lifecycle
     }
   }
 }
+
+module "baltilogix_bucket" {
+  source          = "../modules/s3_bucket"
+  team            = var.team
+  bucket-use-case = "Baltilogix-compaction"
+  service         = "s3"
+  versioning      = "Enabled"
+  environment     = var.environment
+}
