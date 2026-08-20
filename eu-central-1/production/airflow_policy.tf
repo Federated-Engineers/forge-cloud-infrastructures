@@ -27,6 +27,7 @@ resource "aws_iam_policy" "airflow_policy" {
           "arn:aws:s3:::baltilogix-raw-ingestion/*",
           module.nordic-peaks-oslo.arn,
           "${module.nordic-peaks-oslo.arn}/*",
+          "${module.luminabricks_bucket.arn}/*"
         ]
       },
 
