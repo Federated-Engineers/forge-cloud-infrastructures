@@ -123,7 +123,7 @@ module "baltilogix_bucket" {
   environment     = var.environment
 }
 
-module "alpenmechanik_bucket" {
+module "luminabricks_bucket" {
   source          = "../modules/s3_bucket"
   team            = var.team
   bucket-use-case = "luminabricks-data"
