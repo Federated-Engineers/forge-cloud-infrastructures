@@ -122,3 +122,12 @@ module "baltilogix_bucket" {
   versioning      = "Enabled"
   environment     = var.environment
 }
+
+module "alpenmechanik_bucket" {
+  source          = "../modules/s3_bucket"
+  team            = var.team
+  bucket-use-case = "luminabricks-data"
+  service         = "s3"
+  versioning      = "Enabled"
+  environment     = var.environment
+}
