@@ -1,25 +1,9 @@
-resource "aws_iam_role" "dms_vpc_role" {
-  name        = "dms-vpc-role"
-  description = "role required for the vpc to assess the vpc network"
-
-  # This is the TRUST policy — who is allowed to assume this role.
-  # Not to be confused with a permissions policy (what the role can DO).
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Principal = {
-          Service = "dms.amazonaws.com"
-        }
-        Action = "sts:AssumeRole"
-      }
-    ]
-  })
+data "aws_iam_role" "dms_vpc_role" {
+  name = "dms-vpc-role"
 }
 
 resource "aws_iam_role_policy_attachment" "dms_vpc_role_policy" {
-  role       = aws_iam_role.dms_vpc_role.name
+  role       = data.aws_iam_role.deburf_dms_vpc_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonDMSVPCManagementRole"
 }
 
@@ -66,7 +50,7 @@ resource "aws_iam_role_policy" "dms_s3_target_policy" {
   })
 }
 
-resource "aws_dms_replication_subnet_group" "this" {
+resource "aws_dms_replication_subnet_group" "deburf_sb_group" {
   replication_subnet_group_id          = "dms-logistics-subnet-group"
   replication_subnet_group_description = "Subnet group for the DMS logistics replication instance"
   subnet_ids = [
@@ -99,7 +83,7 @@ resource "aws_security_group_rule" "allow_dms_to_source_rds" {
   description              = "Allow DMS replication instance to reach source RDS PostgreSQL"
 }
 
-resource "aws_dms_replication_instance" "test" {
+resource "aws_dms_replication_instance" "deburf_dms_ri" {
   allocated_storage            = 20
   apply_immediately            = true
   auto_minor_version_upgrade   = true
