@@ -93,7 +93,7 @@ resource "aws_dms_replication_instance" "deburf_dms_ri" {
   publicly_accessible          = false
   replication_instance_class   = "dms.t3.small"
   replication_instance_id      = "dms-replication-instance-tf"
-  replication_subnet_group_id  = aws_dms_replication_subnet_group.this.id
+  replication_subnet_group_id  = aws_dms_replication_subnet_group.deburf_dms_ri.id
 
   tags = merge(local.common_tags, {
     Name = "federated-engineers-${var.environment}-${var.team}",
@@ -149,7 +149,7 @@ resource "aws_dms_s3_endpoint" "target" {
 resource "aws_dms_replication_task" "full_load" {
   replication_task_id      = "dms-replication-instance-tf"
   migration_type           = "full-load"
-  replication_instance_arn = aws_dms_replication_instance.test.replication_instance_arn
+  replication_instance_arn = aws_dms_replication_instance.deburf_dms_ri.replication_instance_arn
   source_endpoint_arn      = aws_dms_endpoint.source.endpoint_arn
   target_endpoint_arn      = aws_dms_s3_endpoint.target.endpoint_arn
 
