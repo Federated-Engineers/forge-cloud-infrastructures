@@ -3,7 +3,7 @@ data "aws_iam_role" "dms_vpc_role" {
 }
 
 resource "aws_iam_role_policy_attachment" "dms_vpc_role_policy" {
-  role       = data.aws_iam_role.deburf_dms_vpc_role.name
+  role       = data.aws_iam_role.dms_vpc_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonDMSVPCManagementRole"
 }
 
@@ -147,7 +147,7 @@ resource "aws_dms_s3_endpoint" "target" {
 }
 
 resource "aws_dms_replication_task" "full_load" {
-  replication_task_id      = "deburf-dms-replication-task"
+  replication_task_id      = "dms-replication-instance-tf"
   migration_type           = "full-load"
   replication_instance_arn = aws_dms_replication_instance.test.replication_instance_arn
   source_endpoint_arn      = aws_dms_endpoint.source.endpoint_arn
