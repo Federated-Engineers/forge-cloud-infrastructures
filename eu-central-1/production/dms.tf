@@ -93,7 +93,7 @@ resource "aws_dms_replication_instance" "deburf_dms_ri" {
   publicly_accessible          = false
   replication_instance_class   = "dms.t3.small"
   replication_instance_id      = "dms-replication-instance-tf"
-  replication_subnet_group_id  = aws_dms_replication_subnet_group.deburf_dms_ri.id
+  replication_subnet_group_id  = aws_dms_replication_subnet_group.deburf_sb_group.id
 
   tags = merge(local.common_tags, {
     Name = "federated-engineers-${var.environment}-${var.team}",
