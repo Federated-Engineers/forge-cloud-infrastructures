@@ -39,15 +39,15 @@ resource "aws_s3_bucket_lifecycle_configuration" "liffey_lux_linens" {
 
 ####### AWS GLUE DB ##########
 resource "aws_glue_catalog_database" "liffey_luxury_linens" {
-  name = "liffey_luxury_linens_db"
+  name        = "liffey_luxury_linens_db"
   description = "Curated zone database for Liffey Luxury Linens pipeline"
 }
 
 
 ####### ATHENA WORKGROUP ##########
 resource "aws_athena_workgroup" "liffey_luxury_linens" {
-  name  = "liffey_luxury_linens_workgroup"
-  state = "ENABLED"
+  name          = "liffey_luxury_linens_workgroup"
+  state         = "ENABLED"
   force_destroy = true
 
   configuration {
@@ -74,8 +74,8 @@ resource "aws_iam_policy" "athena_query_access" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect = "Deny"
-        Action = ["athena:StartQueryExecution"]
+        Effect   = "Deny"
+        Action   = ["athena:StartQueryExecution"]
         Resource = "*"
         Condition = {
           StringNotEquals = {
