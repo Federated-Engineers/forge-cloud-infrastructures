@@ -188,4 +188,3 @@ resource "aws_vpc_endpoint" "s3" {
     "rtb-0b5dbdf9fb2401626",
   ]
 }
-
