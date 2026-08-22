@@ -32,6 +32,15 @@ module "mave-aqua-datalake" {
   versioning  = "Enabled"
   environment = var.environment
 }
+module "horlogerie_data_lake" {
+  source          = "../modules/s3_bucket"
+  team            = var.team
+  bucket-use-case = "horlogerie-data-lake"
+
+  service     = "s3"
+  versioning  = "Enabled"
+  environment = var.environment
+}
 module "bbss_bucket" {
   source          = "../modules/s3_bucket"
   team            = var.team
