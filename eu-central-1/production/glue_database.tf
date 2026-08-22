@@ -24,7 +24,7 @@ resource "aws_glue_catalog_database" "HDG_db" {
 }
 
 resource "aws_glue_catalog_database" "liffey_luxury_linens" {
-  name        = "liffey_luxury_linens_db"
+  name = "liffey_luxury_linens_db"
 
   tags = merge(local.common_tags, {
     Owner   = "liffey_luxury_linens",
