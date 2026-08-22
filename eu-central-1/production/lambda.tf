@@ -25,6 +25,12 @@ resource "aws_lambda_function" "ghost_bridge_lambda" {
     ]
   }
 
+  environment {
+    variables = {
+      DB_SECRET_ARN = aws_secretsmanager_secret.ghost_bridge_db_secret.arn
+    }
+  }
+
   tags = merge(local.common_tags, {
     Name = "ghost-bridge-lambda"
   })
