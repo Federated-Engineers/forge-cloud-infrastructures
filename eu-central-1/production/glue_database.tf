@@ -20,6 +20,11 @@ resource "aws_glue_catalog_database" "forge-production-deburf" {
 
   tags = merge(local.common_tags, {
     Owner   = "deburf",
+resource "aws_glue_catalog_database" "HDG_db" {
+  name = "forge-production-hdg_db"
+
+  tags = merge(local.common_tags, {
+    Owner   = "mave_aqua",
     Service = "forge-airflow"
   })
 }

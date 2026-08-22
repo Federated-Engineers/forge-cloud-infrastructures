@@ -16,6 +16,8 @@ resource "aws_iam_policy" "airflow_policy" {
         Resource = [
           module.scardinavas_bucket.arn,
           "${module.scardinavas_bucket.arn}/*",
+          module.horlogerie_data_lake.arn,
+          "${module.horlogerie_data_lake.arn}/*",
           module.bbss_bucket.arn,
           "${module.bbss_bucket.arn}/*",
           "${module.alpenmechanik_bucket.arn}/*",
