@@ -20,7 +20,7 @@ resource "aws_glue_catalog_database" "forge-production-deburf" {
 
   tags = merge(local.common_tags, {
     Owner   = "deburf",
-       Service = "forge-airflow"
+    Service = "forge-airflow"
   })
 }
 
