@@ -6,7 +6,6 @@ module "scardinavas_bucket" {
   versioning      = "Enabled"
   environment     = var.environment
 }
-
 resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
   bucket = module.scardinavas_bucket.bucket_name
 
@@ -24,16 +23,33 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
     }
   }
 }
+module "mave-aqua-datalake" {
+  source          = "../modules/s3_bucket"
+  team            = var.team
+  bucket-use-case = "mave-aqua-data-lake"
 
+  service     = "s3"
+  versioning  = "Enabled"
+  environment = var.environment
+}
+module "horlogerie_data_lake" {
+  source          = "../modules/s3_bucket"
+  team            = var.team
+  bucket-use-case = "horlogerie-data-lake"
+
+  service     = "s3"
+  versioning  = "Enabled"
+  environment = var.environment
+}
 module "bbss_bucket" {
   source          = "../modules/s3_bucket"
   team            = var.team
   bucket-use-case = "BBSS-data-lake"
-  service         = "s3"
-  versioning      = "Enabled"
-  environment     = var.environment
-}
 
+  service     = "s3"
+  versioning  = "Enabled"
+  environment = var.environment
+}
 resource "aws_s3_bucket_lifecycle_configuration" "bbss_bucket_lifecycle" {
   bucket = module.bbss_bucket.bucket_name
 
@@ -78,4 +94,49 @@ resource "aws_s3_bucket_lifecycle_configuration" "nordic_peaks" {
       storage_class = "GLACIER_IR"
     }
   }
+}
+
+module "alpenmechanik_bucket" {
+  source          = "../modules/s3_bucket"
+  team            = var.team
+  bucket-use-case = "AlpenMechanik-SFTP"
+  service         = "s3"
+  versioning      = "Enabled"
+  environment     = var.environment
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "alpenmechanik_bucket_lifecycle" {
+  bucket = module.alpenmechanik_bucket.bucket_name
+
+  rule {
+    id     = "transition-to-glacier-instant-retrieval"
+    status = "Enabled"
+
+    filter {
+      prefix = "repairs/"
+    }
+
+    transition {
+      days          = 180
+      storage_class = "GLACIER_IR"
+    }
+  }
+}
+
+module "baltilogix_bucket" {
+  source          = "../modules/s3_bucket"
+  team            = var.team
+  bucket-use-case = "Baltilogix-compaction"
+  service         = "s3"
+  versioning      = "Enabled"
+  environment     = var.environment
+}
+
+module "deburf_bucket" {
+  source          = "../modules/s3_bucket"
+  team            = var.team
+  bucket-use-case = "deburf-data-lake"
+  service         = "s3"
+  versioning      = "Enabled"
+  environment     = var.environment
 }

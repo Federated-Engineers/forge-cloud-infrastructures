@@ -1,5 +1,6 @@
+
 resource "aws_iam_policy" "airflow_policy" {
-  name        = "${var.team}-airflow-access-policy"
+  name        = "forge-airflow-access-policy"
   description = "Allow Airflow to access aws resources"
 
   policy = jsonencode({
@@ -15,8 +16,19 @@ resource "aws_iam_policy" "airflow_policy" {
         Resource = [
           module.scardinavas_bucket.arn,
           "${module.scardinavas_bucket.arn}/*",
+          module.horlogerie_data_lake.arn,
+          "${module.horlogerie_data_lake.arn}/*",
           module.bbss_bucket.arn,
-          "${module.bbss_bucket.arn}/*"
+          "${module.bbss_bucket.arn}/*",
+          "${module.alpenmechanik_bucket.arn}/*",
+          module.mave-aqua-datalake.arn,
+          "${module.mave-aqua-datalake.arn}/*",
+          module.baltilogix_bucket.arn,
+          "${module.baltilogix_bucket.arn}/*",
+          "arn:aws:s3:::baltilogix-raw-ingestion",
+          "arn:aws:s3:::baltilogix-raw-ingestion/*",
+          module.nordic-peaks-oslo.arn,
+          "${module.nordic-peaks-oslo.arn}/*",
         ]
       },
 
@@ -25,7 +37,7 @@ resource "aws_iam_policy" "airflow_policy" {
         Effect = "Allow"
         Action = [
           "ssm:GetParameter",
-          "ssm:GetParameters"
+          "ssm:GetParameters",
         ]
         Resource = [
           "arn:aws:ssm:eu-central-1:049417293525:parameter/production/google-service-account/credentials",
@@ -46,4 +58,3 @@ resource "aws_iam_policy" "airflow_policy" {
     ]
   })
 }
-
