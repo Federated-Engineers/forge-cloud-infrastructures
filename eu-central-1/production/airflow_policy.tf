@@ -27,6 +27,8 @@ resource "aws_iam_policy" "airflow_policy" {
           "arn:aws:s3:::baltilogix-raw-ingestion/*",
           module.nordic-peaks-oslo.arn,
           "${module.nordic-peaks-oslo.arn}/*",
+          module.deburf_bucket.arn,
+          "${module.deburf_bucket.arn}/*"
         ]
       },
 
@@ -40,7 +42,8 @@ resource "aws_iam_policy" "airflow_policy" {
         Resource = [
           "arn:aws:ssm:eu-central-1:049417293525:parameter/production/google-service-account/credentials",
           "arn:aws:ssm:eu-central-1:049417293525:parameter/production/forge/bbss/api-key",
-          "arn:aws:ssm:eu-central-1:049417293525:parameter/supabase/database/credentials"
+          "arn:aws:ssm:eu-central-1:049417293525:parameter/supabase/database/credentials",
+          "arn:aws:ssm:eu-central-1:049417293525:parameter/production/rds/credentials"
 
         ]
       },
@@ -52,6 +55,19 @@ resource "aws_iam_policy" "airflow_policy" {
           "glue:*"
         ]
         Resource = ["*"]
+      },
+
+      {
+        Sid    = "DMSReplicationTaskControl"
+        Effect = "Allow"
+        Action = [
+          "dms:StartReplicationTask",
+          "dms:StopReplicationTask",
+          "dms:DescribeReplicationTasks"
+        ]
+        Resource = [
+          "arn:aws:dms:eu-central-1:049417293525:task:GQEWCRH7WNGH3LE7SZQ6B7M62A"
+        ]
       }
     ]
   })

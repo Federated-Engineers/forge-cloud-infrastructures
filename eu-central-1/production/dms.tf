@@ -109,7 +109,7 @@ resource "aws_dms_replication_instance" "deburf_dms_ri" {
 }
 
 data "aws_ssm_parameter" "rds_creds" {
-  name            = "/supabase/database/credentials"
+  name            = "/production/rds/credentials"
   with_decryption = true
 }
 
