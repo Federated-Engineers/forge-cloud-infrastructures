@@ -14,6 +14,16 @@ resource "aws_glue_catalog_database" "mave_aqua_db" {
     Service = "forge-airflow"
   })
 }
+
+resource "aws_glue_catalog_database" "forge-production-deburf" {
+  name = "deburf_db"
+
+  tags = merge(local.common_tags, {
+    Owner   = "deburf",
+    Service = "forge-airflow"
+  })
+}
+
 resource "aws_glue_catalog_database" "HDG_db" {
   name = "forge-production-hdg_db"
 
