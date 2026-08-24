@@ -109,7 +109,7 @@ resource "aws_iam_policy" "ghost_bridge_lambda_policy" {
           "logs:PutLogEvents"
         ]
 
-        Resource = "arn:aws:logs:*:*:*"
+        Resource = "${aws_cloudwatch_log_group.ghost_bridge_lambda_logs.arn}:*"
       },
 
       {
@@ -131,7 +131,7 @@ resource "aws_iam_policy" "ghost_bridge_lambda_policy" {
           "s3:GetObject"
         ]
 
-        Resource = "arn:aws:s3:::munchen-auto-munich/*"
+        Resource = "arn:aws:s3:::munchen-auto-munich/munchen-auto/*"
       },
 
       {
