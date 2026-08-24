@@ -75,7 +75,7 @@ data "aws_subnets" "private" {
 resource "aws_dms_replication_subnet_group" "deburf_sb_group" {
   replication_subnet_group_id          = "dms-logistics-subnet-group"
   replication_subnet_group_description = "Subnet group for the DMS logistics replication instance"
-  subnet_ids                           = data.aws_subnets.public.ids
+  subnet_ids                           = data.aws_subnets.private.ids
 }
 
 resource "aws_security_group" "replication_instance" {
