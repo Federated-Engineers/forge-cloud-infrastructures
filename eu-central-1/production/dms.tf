@@ -75,7 +75,7 @@ data "aws_subnets" "private" {
 resource "aws_dms_replication_subnet_group" "deburf_sb_group" {
   replication_subnet_group_id          = "dms-logistics-subnet-group"
   replication_subnet_group_description = "Subnet group for the DMS logistics replication instance"
-  subnet_ids = data.aws_subnets.public.ids
+  subnet_ids                           = data.aws_subnets.public.ids
 }
 
 resource "aws_security_group" "replication_instance" {
@@ -211,5 +211,5 @@ resource "aws_vpc_endpoint" "s3" {
   vpc_id            = "data.aws_vpc.production.id"
   service_name      = "com.amazonaws.eu-central-1.s3"
   vpc_endpoint_type = "Gateway"
-  route_table_ids = data.aws_route_tables.private.ids
+  route_table_ids   = data.aws_route_tables.private.ids
 }
