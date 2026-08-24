@@ -51,7 +51,7 @@ resource "aws_iam_role_policy" "dms_s3_target_policy" {
 
 data "aws_vpc" "production" {
   tags = {
-    Environment = "production"
+    environment = "production"
     Name        = "secure-production"
   }
 }
@@ -68,7 +68,7 @@ data "aws_subnets" "private" {
   }
 
   tags = {
-    Environment = "production"
+    environment = "production"
   }
 }
 
