@@ -75,7 +75,7 @@ resource "aws_athena_workgroup" "deburf_group" {
   }
 }
 
-resource "aws_iam_policy" "athena_query_access" {
+resource "aws_iam_policy" "deburf_athena_query_access" {
   name = "deburf-athena-analyst-access"
 
   policy = jsonencode({
