@@ -65,96 +65,96 @@ resource "aws_iam_role_policy_attachment" "sftp_user_role_policy_attachment" {
   policy_arn = aws_iam_policy.sftp_user_role_policy.arn
 }
 
-resource "aws_iam_role" "ghost_bridge_lambda_role" {
-  name        = "ghost-bridge-lambda-role"
-  description = "IAM role for Ghost-Bridge Lambda function"
+# resource "aws_iam_role" "ghost_bridge_lambda_role" {
+#   name        = "ghost-bridge-lambda-role"
+#   description = "IAM role for Ghost-Bridge Lambda function"
 
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
+#   assume_role_policy = jsonencode({
+#     Version = "2012-10-17"
 
-    Statement = [
-      {
-        Effect = "Allow"
+#     Statement = [
+#       {
+#         Effect = "Allow"
 
-        Principal = {
-          Service = "lambda.amazonaws.com"
-        }
+#         Principal = {
+#           Service = "lambda.amazonaws.com"
+#         }
 
-        Action = "sts:AssumeRole"
-      }
-    ]
-  })
+#         Action = "sts:AssumeRole"
+#       }
+#     ]
+#   })
 
-  tags = merge(local.common_tags, {
-    Name = "ghost-bridge-lambda-role"
-  })
-}
+#   tags = merge(local.common_tags, {
+#     Name = "ghost-bridge-lambda-role"
+#   })
+# }
 
-resource "aws_iam_policy" "ghost_bridge_lambda_policy" {
-  name        = "ghost-bridge-lambda-policy"
-  description = "Least privilege policy for Ghost-Bridge Lambda"
+# resource "aws_iam_policy" "ghost_bridge_lambda_policy" {
+#   name        = "ghost-bridge-lambda-policy"
+#   description = "Least privilege policy for Ghost-Bridge Lambda"
 
-  policy = jsonencode({
-    Version = "2012-10-17"
+#   policy = jsonencode({
+#     Version = "2012-10-17"
 
-    Statement = [
+#     Statement = [
 
-      {
-        Sid    = "CloudWatchLogs"
-        Effect = "Allow"
+#       {
+#         Sid    = "CloudWatchLogs"
+#         Effect = "Allow"
 
-        Action = [
-          "logs:CreateLogGroup",
-          "logs:CreateLogStream",
-          "logs:PutLogEvents"
-        ]
+#         Action = [
+#           "logs:CreateLogGroup",
+#           "logs:CreateLogStream",
+#           "logs:PutLogEvents"
+#         ]
 
-        Resource = "${aws_cloudwatch_log_group.ghost_bridge_lambda_logs.arn}:*"
-      },
+#         Resource = "${aws_cloudwatch_log_group.ghost_bridge_lambda_logs.arn}:*"
+#       },
 
-      {
-        Sid    = "SecretsManager"
-        Effect = "Allow"
+#       {
+#         Sid    = "SecretsManager"
+#         Effect = "Allow"
 
-        Action = [
-          "secretsmanager:GetSecretValue"
-        ]
+#         Action = [
+#           "secretsmanager:GetSecretValue"
+#         ]
 
-        Resource = aws_secretsmanager_secret.ghost_bridge_db_secret.arn
-      },
+#         Resource = aws_secretsmanager_secret.ghost_bridge_db_secret.arn
+#       },
 
-      {
-        Sid    = "S3Access"
-        Effect = "Allow"
+#       {
+#         Sid    = "S3Access"
+#         Effect = "Allow"
 
-        Action = [
-          "s3:GetObject"
-        ]
+#         Action = [
+#           "s3:GetObject"
+#         ]
 
-        Resource = "arn:aws:s3:::munchen-auto-munich/munchen-auto/*"
-      },
+#         Resource = "arn:aws:s3:::munchen-auto-munich/munchen-auto/*"
+#       },
 
-      {
-        Sid    = "LambdaVPCAccess"
-        Effect = "Allow"
+#       {
+#         Sid    = "LambdaVPCAccess"
+#         Effect = "Allow"
 
-        Action = [
-          "ec2:CreateNetworkInterface",
-          "ec2:DescribeNetworkInterfaces",
-          "ec2:DeleteNetworkInterface"
-        ]
+#         Action = [
+#           "ec2:CreateNetworkInterface",
+#           "ec2:DescribeNetworkInterfaces",
+#           "ec2:DeleteNetworkInterface"
+#         ]
 
-        Resource = "*"
-      }
-    ]
-  })
+#         Resource = "*"
+#       }
+#     ]
+#   })
 
-  tags = merge(local.common_tags, {
-    Name = "ghost-bridge-lambda-policy"
-  })
-}
+#   tags = merge(local.common_tags, {
+#     Name = "ghost-bridge-lambda-policy"
+#   })
+# }
 
-resource "aws_iam_role_policy_attachment" "ghost_bridge_lambda_policy_attachment" {
-  role       = aws_iam_role.ghost_bridge_lambda_role.name
-  policy_arn = aws_iam_policy.ghost_bridge_lambda_policy.arn
-}
+# resource "aws_iam_role_policy_attachment" "ghost_bridge_lambda_policy_attachment" {
+#   role       = aws_iam_role.ghost_bridge_lambda_role.name
+#   policy_arn = aws_iam_policy.ghost_bridge_lambda_policy.arn
+# }
