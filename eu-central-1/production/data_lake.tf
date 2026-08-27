@@ -140,3 +140,40 @@ module "deburf_bucket" {
   versioning      = "Enabled"
   environment     = var.environment
 }
+
+module "liffey_lux_linens" {
+  source          = "../modules/s3_bucket"
+  team            = var.team
+  bucket-use-case = "liffey-lux-linens"
+  service         = "s3"
+  versioning      = "Enabled"
+  environment     = var.environment
+}
+
+module "liffey_lux_athena_query_result" {
+  source          = "../modules/s3_bucket"
+  team            = var.team
+  bucket-use-case = "athena-query-results"
+  service         = "s3"
+  versioning      = "Enabled"
+  environment     = var.environment
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "liffey_lux_linens" {
+
+  bucket = module.liffey_lux_linens.bucket_name
+
+  rule {
+    id     = "transition-landing-zone-to-Glacier-IR"
+    status = "Enabled"
+
+    filter {
+      prefix = "landing_zone/"
+    }
+
+    transition {
+      days          = 180
+      storage_class = "GLACIER_IR"
+    }
+  }
+}
