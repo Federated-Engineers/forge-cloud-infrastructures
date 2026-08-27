@@ -70,7 +70,7 @@ resource "aws_iam_policy" "airflow_policy" {
           "dms:DescribeReplicationTasks"
         ]
         Resource = [
-          "arn:aws:dms:eu-central-1:049417293525:task:GQEWCRH7WNGH3LE7SZQ6B7M62A"
+          aws_dms_replication_task.full_load.replication_task_arn
         ]
       }
     ]
