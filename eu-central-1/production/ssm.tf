@@ -17,3 +17,13 @@ resource "aws_ssm_parameter" "user_public_key" {
   })
   value_wo_version = 1
 }
+
+resource "aws_ssm_parameter" "luminabricks_user_access_key" {
+  name = "/${var.environment}/${var.team}/luminabricks/airbyte/access_key"
+  type = "SecureString"
+  value_wo = jsonencode({
+    "access_key"        = aws_iam_access_key.luminabricks_airbyte_access_key.id
+    "secret_access_key" = aws_iam_access_key.luminabricks_airbyte_access_key.secret
+  })
+  value_wo_version = 1
+}

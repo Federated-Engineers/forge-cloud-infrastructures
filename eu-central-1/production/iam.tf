@@ -64,3 +64,52 @@ resource "aws_iam_role_policy_attachment" "sftp_user_role_policy_attachment" {
   role       = aws_iam_role.sftp_user_role.name
   policy_arn = aws_iam_policy.sftp_user_role_policy.arn
 }
+
+resource "aws_iam_user" "luminabricks_airbyte_user" {
+  name = "luminabricks-airbyte-user"
+  path = "/${var.environment}/luminabricks/airbyte/"
+}
+
+resource "aws_iam_policy" "luminabricks_airbyte_policy" {
+  name        = "luminabricks-airbyte-policy"
+  description = "IAM policy for Airbyte to access AWS S3 Buckets"
+  path        = "/${var.environment}/luminabricks/airbyte/"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid = "AllowListingOfUserFolder"
+        Action = [
+          "s3:ListBucket"
+        ]
+        Effect = "Allow"
+        Resource = [
+          module.luminabricks_bucket.arn
+        ]
+      },
+      {
+        Sid    = "HomeDirObjectAccess"
+        Effect = "Allow"
+        Action = [
+          "s3:PutObject",
+          "s3:GetObject",
+          "s3:DeleteObject",
+          "s3:DeleteObjectVersion",
+          "s3:GetObjectVersion",
+          "s3:GetObjectACL",
+          "s3:PutObjectACL"
+        ]
+        Resource = "${module.luminabricks_bucket.arn}/*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "attach_luminabricks_airbyte_policy" {
+  role       = aws_iam_user.luminabricks_airbyte_user.name
+  policy_arn = aws_iam_policy.luminabricks_airbyte_policy.arn
+}
+
+resource "aws_iam_access_key" "luminabricks_airbyte_access_key" {
+  user = aws_iam_user.luminabricks_airbyte_user.name
+}
