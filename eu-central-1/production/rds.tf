@@ -1,4 +1,4 @@
-resource "aws_db_instance" "ctp_db_instance" {
+resource "aws_db_instance" "alpine_db_instance" {
   allocated_storage           = 100
   db_name                     = "forge_alpine_heritage"
   engine                      = "postgres"
