@@ -16,6 +16,8 @@ resource "aws_iam_policy" "airflow_policy" {
         Resource = [
           module.scardinavas_bucket.arn,
           "${module.scardinavas_bucket.arn}/*",
+          module.horlogerie_data_lake.arn,
+          "${module.horlogerie_data_lake.arn}/*",
           module.bbss_bucket.arn,
           "${module.bbss_bucket.arn}/*",
           "${module.alpenmechanik_bucket.arn}/*",
@@ -27,7 +29,11 @@ resource "aws_iam_policy" "airflow_policy" {
           "arn:aws:s3:::baltilogix-raw-ingestion/*",
           module.nordic-peaks-oslo.arn,
           "${module.nordic-peaks-oslo.arn}/*",
-          "${module.luminabricks_bucket.arn}/*"
+          "${module.luminabricks_bucket.arn}/*",
+          module.liffey_lux_linens.arn,
+          "${module.liffey_lux_linens.arn}/*",
+          module.deburf_bucket.arn,
+          "${module.deburf_bucket.arn}/*"
         ]
       },
 
@@ -41,7 +47,8 @@ resource "aws_iam_policy" "airflow_policy" {
         Resource = [
           "arn:aws:ssm:eu-central-1:049417293525:parameter/production/google-service-account/credentials",
           "arn:aws:ssm:eu-central-1:049417293525:parameter/production/forge/bbss/api-key",
-          "arn:aws:ssm:eu-central-1:049417293525:parameter/supabase/database/credentials"
+          "arn:aws:ssm:eu-central-1:049417293525:parameter/supabase/database/credentials",
+          "arn:aws:ssm:eu-central-1:049417293525:parameter/production/rds/credentials"
 
         ]
       },
@@ -53,6 +60,19 @@ resource "aws_iam_policy" "airflow_policy" {
           "glue:*"
         ]
         Resource = ["*"]
+      },
+
+      {
+        Sid    = "DMSReplicationTaskControl"
+        Effect = "Allow"
+        Action = [
+          "dms:StartReplicationTask",
+          "dms:StopReplicationTask",
+          "dms:DescribeReplicationTasks"
+        ]
+        Resource = [
+          aws_dms_replication_task.full_load.replication_task_arn
+        ]
       }
     ]
   })

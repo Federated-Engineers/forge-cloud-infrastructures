@@ -32,6 +32,15 @@ module "mave-aqua-datalake" {
   versioning  = "Enabled"
   environment = var.environment
 }
+module "horlogerie_data_lake" {
+  source          = "../modules/s3_bucket"
+  team            = var.team
+  bucket-use-case = "horlogerie-data-lake"
+
+  service     = "s3"
+  versioning  = "Enabled"
+  environment = var.environment
+}
 module "bbss_bucket" {
   source          = "../modules/s3_bucket"
   team            = var.team
@@ -130,4 +139,49 @@ module "luminabricks_bucket" {
   service         = "s3"
   versioning      = "Enabled"
   environment     = var.environment
+}
+module "deburf_bucket" {
+  source          = "../modules/s3_bucket"
+  team            = var.team
+  bucket-use-case = "deburf-data-lake"
+  service         = "s3"
+  versioning      = "Enabled"
+  environment     = var.environment
+}
+
+module "liffey_lux_linens" {
+  source          = "../modules/s3_bucket"
+  team            = var.team
+  bucket-use-case = "liffey-lux-linens"
+  service         = "s3"
+  versioning      = "Enabled"
+  environment     = var.environment
+}
+
+module "liffey_lux_athena_query_result" {
+  source          = "../modules/s3_bucket"
+  team            = var.team
+  bucket-use-case = "athena-query-results"
+  service         = "s3"
+  versioning      = "Enabled"
+  environment     = var.environment
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "liffey_lux_linens" {
+
+  bucket = module.liffey_lux_linens.bucket_name
+
+  rule {
+    id     = "transition-landing-zone-to-Glacier-IR"
+    status = "Enabled"
+
+    filter {
+      prefix = "landing_zone/"
+    }
+
+    transition {
+      days          = 180
+      storage_class = "GLACIER_IR"
+    }
+  }
 }
