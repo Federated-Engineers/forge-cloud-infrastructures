@@ -78,7 +78,7 @@ resource "aws_iam_policy" "luminabricks_airbyte_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Sid = "AllowListingOfUserFolder"
+        Sid = "AllowListingOfBuckets"
         Action = [
           "s3:ListBucket"
         ]
@@ -88,16 +88,16 @@ resource "aws_iam_policy" "luminabricks_airbyte_policy" {
         ]
       },
       {
-        Sid    = "HomeDirObjectAccess"
+        Sid    = "AllowsObjectsAccess"
         Effect = "Allow"
         Action = [
           "s3:PutObject",
           "s3:GetObject",
           "s3:DeleteObject",
-          "s3:DeleteObjectVersion",
-          "s3:GetObjectVersion",
-          "s3:GetObjectACL",
-          "s3:PutObjectACL"
+          "s3:PutObjectACL",
+          "s3:ListBucketMultipartUploads",
+          "s3:AbortMultipartUpload",
+          "s3:GetBucketLocation"
         ]
         Resource = "${module.luminabricks_bucket.arn}/*"
       }
@@ -105,14 +105,10 @@ resource "aws_iam_policy" "luminabricks_airbyte_policy" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "attach_luminabricks_airbyte_policy" {
-  role       = aws_iam_user.luminabricks_airbyte_user.name
-  policy_arn = aws_iam_policy.luminabricks_airbyte_policy.arn
-}
-
 resource "aws_iam_access_key" "luminabricks_airbyte_access_key" {
   user = aws_iam_user.luminabricks_airbyte_user.name
 }
+
 # resource "aws_iam_role" "ghost_bridge_lambda_role" {
 #   name        = "ghost-bridge-lambda-role"
 #   description = "IAM role for Ghost-Bridge Lambda function"
