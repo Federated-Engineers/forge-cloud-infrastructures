@@ -70,9 +70,7 @@ resource "aws_iam_policy" "airflow_policy" {
           "dms:StopReplicationTask",
           "dms:DescribeReplicationTasks"
         ]
-        Resource = [
-          aws_dms_replication_task.full_load.replication_task_arn
-        ]
+        Resource = ["*"]
       }
     ]
   })
