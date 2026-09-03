@@ -132,6 +132,15 @@ module "baltilogix_bucket" {
   environment     = var.environment
 }
 
+module "luminabricks_bucket" {
+  source          = "../modules/s3_bucket"
+  team            = var.team
+  bucket-use-case = "luminabricks-data"
+  service         = "s3"
+  versioning      = "Enabled"
+  environment     = var.environment
+}
+
 module "deburf_bucket" {
   source          = "../modules/s3_bucket"
   team            = var.team
