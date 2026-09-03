@@ -65,50 +65,6 @@ resource "aws_iam_role_policy_attachment" "sftp_user_role_policy_attachment" {
   policy_arn = aws_iam_policy.sftp_user_role_policy.arn
 }
 
-resource "aws_iam_user" "luminabricks_airbyte_user" {
-  name = "luminabricks-airbyte-user"
-  path = "/${var.environment}/luminabricks/airbyte/"
-}
-
-resource "aws_iam_policy" "luminabricks_airbyte_policy" {
-  name        = "luminabricks-airbyte-policy"
-  description = "IAM policy for Airbyte to access AWS S3 Buckets"
-  path        = "/${var.environment}/luminabricks/airbyte/"
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Sid = "AllowListingOfBuckets"
-        Action = [
-          "s3:ListBucket"
-        ]
-        Effect = "Allow"
-        Resource = [
-          module.luminabricks_bucket.arn
-        ]
-      },
-      {
-        Sid    = "AllowsObjectsAccess"
-        Effect = "Allow"
-        Action = [
-          "s3:PutObject",
-          "s3:GetObject",
-          "s3:DeleteObject",
-          "s3:PutObjectACL",
-          "s3:ListBucketMultipartUploads",
-          "s3:AbortMultipartUpload",
-          "s3:GetBucketLocation"
-        ]
-        Resource = "${module.luminabricks_bucket.arn}/*"
-      }
-    ]
-  })
-}
-
-resource "aws_iam_access_key" "luminabricks_airbyte_access_key" {
-  user = aws_iam_user.luminabricks_airbyte_user.name
-}
-
 # resource "aws_iam_role" "ghost_bridge_lambda_role" {
 #   name        = "ghost-bridge-lambda-role"
 #   description = "IAM role for Ghost-Bridge Lambda function"
