@@ -12,8 +12,8 @@
 #   manage_master_user_password = true
 #   skip_final_snapshot         = true
 #   publicly_accessible         = false
-
-
+#
+#
 #   tags = {
 #     Environment = var.environment
 #   }
