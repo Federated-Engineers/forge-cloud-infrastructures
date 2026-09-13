@@ -186,3 +186,12 @@ resource "aws_s3_bucket_lifecycle_configuration" "liffey_lux_linens" {
     }
   }
 }
+
+module "angel_city_health_systems_tfstate_bucket" {
+  source          = "../modules/s3_bucket"
+  team            = var.team
+  bucket-use-case = "achs-tfstate-bucket"
+  service         = "s3"
+  versioning      = "Enabled"
+  environment     = var.environment
+}
