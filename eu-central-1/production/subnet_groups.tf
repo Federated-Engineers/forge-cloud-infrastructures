@@ -24,7 +24,7 @@ resource "aws_db_subnet_group" "forge_alpine_heritage_db_subnet_group" {
 }
 
 
-resource "aws_db_subnet_group" "forge_spreekauf_analytics_redshift_subnet_group" {
+resource "aws_redshift_subnet_group" "forge_spreekauf_analytics_redshift_subnet_group" {
   name       = "spreekauf-redshift-subnet-group"
   subnet_ids = [data.aws_subnet.subnet_a.id, data.aws_subnet.subnet_b.id]
 
