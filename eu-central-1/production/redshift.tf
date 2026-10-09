@@ -76,16 +76,8 @@ resource "aws_redshift_parameter_group" "spreekauf_db_wlm" {
         concurrency_scaling   = "off"
         rules = [
           {
-            rule_name = "abort_BI_scan_over_2tb"
-            predicate = [
-              { metric_name = "query_blocks_read", operator = ">", value = 10 }
-            ]
-            action = "abort"
-          },
-          {
             rule_name = "downgrade_bi_long_running"
             predicate = [
-              { metric_name = "query_cpu_usage_percent", operator = ">", value = 10 },
               { metric_name = "query_execution_time", operator = ">", value = 5 }
             ]
             action = "abort"
