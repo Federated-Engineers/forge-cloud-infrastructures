@@ -88,7 +88,7 @@ resource "aws_redshift_parameter_group" "spreekauf_db_wlm" {
               { metric_name = "query_cpu_usage_percent", operator = ">", value = 10 },
               { metric_name = "query_execution_time", operator = ">", value = 5 }
             ]
-            action = "hop"
+            action = "abort"
           },
         ]
       },
@@ -111,7 +111,7 @@ resource "aws_redshift_parameter_group" "spreekauf_db_wlm" {
               { metric_name = "query_cpu_usage_percent", operator = ">", value = 80 },
               { metric_name = "query_execution_time", operator = ">", value = 1200 }
             ]
-            action = "hop"
+            action = "ab"
           }
         ]
       },
