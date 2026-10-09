@@ -78,7 +78,7 @@ resource "aws_redshift_parameter_group" "spreekauf_db_wlm" {
           {
             rule_name = "abort_BI_scan_over_2tb"
             predicate = [
-              { metric_name = "query_blocks_read", operator = ">", value = 10}
+              { metric_name = "query_blocks_read", operator = ">", value = 10 }
             ]
             action = "abort"
           },
