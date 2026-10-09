@@ -2,12 +2,13 @@ resource "aws_redshift_cluster" "spreekauf_analytics_db_cluster" {
   cluster_identifier           = "spreekauf-redshift-cluster"
   database_name                = "spreekaufdb"
   master_username              = "spreekauf_redshift"
+  master_password              = aws_ssm_parameter.spreekauf_redshift_password.value
   node_type                    = "ra3.large"
   cluster_type                 = "single-node"
   cluster_subnet_group_name    = aws_redshift_subnet_group.spreekauf_redshift_subnet_group.name
   vpc_security_group_ids       = [aws_security_group.spreekauf_db_security_group.id]
   publicly_accessible          = true
-  manage_master_password       = true
+  manage_master_password       = false
   cluster_parameter_group_name = aws_redshift_parameter_group.spreekauf_db_wlm.name
 }
 

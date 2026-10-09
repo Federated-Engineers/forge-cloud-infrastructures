@@ -17,3 +17,10 @@ resource "aws_ssm_parameter" "user_public_key" {
   })
   value_wo_version = 1
 }
+
+resource "aws_ssm_parameter" "spreekauf_redshift_password" {
+  name        = "/spreekauf-master-password"
+  description = "SpreeKauf Redshift cluster master password"
+  type        = "SecureString"
+  value       = random_string.spreekauf_password.result
+}
