@@ -31,7 +31,7 @@ resource "aws_security_group" "spreekauf_db_security_group" {
 
 resource "aws_vpc_security_group_ingress_rule" "spreekauf_redshift_ingress" {
   security_group_id = aws_security_group.spreekauf_db_security_group.id
-  cidr_ipv4         = data.aws_vpc.prod_vpc.cidr_block
+  cidr_ipv4         = "0.0.0.0/0"
 
   from_port   = 5439
   ip_protocol = "tcp"
