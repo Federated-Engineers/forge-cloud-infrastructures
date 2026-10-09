@@ -1,7 +1,7 @@
 data "aws_subnet" "subnet_a" {
   filter {
     name   = "tag:Name"
-    values = ["secure-production-private-a"]
+    values = ["secure-production-public-a"]
   }
 }
 
@@ -9,7 +9,7 @@ data "aws_subnet" "subnet_a" {
 data "aws_subnet" "subnet_b" {
   filter {
     name   = "tag:Name"
-    values = ["secure-production-private-b"]
+    values = ["secure-production-public-b"]
   }
 }
 
