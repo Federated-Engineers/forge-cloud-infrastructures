@@ -1,7 +1,7 @@
 data "aws_subnet" "subnet_a" {
   filter {
     name   = "tag:Name"
-    values = ["secure-production-private-a"]
+    values = ["secure-production-public-a"]
   }
 }
 
@@ -9,7 +9,7 @@ data "aws_subnet" "subnet_a" {
 data "aws_subnet" "subnet_b" {
   filter {
     name   = "tag:Name"
-    values = ["secure-production-private-b"]
+    values = ["secure-production-public-b"]
   }
 }
 
@@ -22,3 +22,15 @@ resource "aws_db_subnet_group" "forge_alpine_heritage_db_subnet_group" {
     Name = "Alpine Heritage RDS subnet group"
   }
 }
+
+
+resource "aws_redshift_subnet_group" "spreekauf_redshift_subnet_group" {
+  name       = "spreekauf-redshift-subnet-group"
+  subnet_ids = [data.aws_subnet.subnet_a.id, data.aws_subnet.subnet_b.id]
+
+  tags = {
+    Name = "SpreeKauf Analytics Redshift subnet group"
+  }
+}
+
+
