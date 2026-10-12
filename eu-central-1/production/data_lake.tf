@@ -195,3 +195,12 @@ module "angel_city_health_systems_tfstate_bucket" {
   versioning      = "Enabled"
   environment     = var.environment
 }
+
+module "cocosurf_tfstate_bucket" {
+  source          = "../modules/s3_bucket"
+  team            = var.team
+  bucket-use-case = "cocosurf-tfstate"
+  service         = "s3"
+  versioning      = "Enabled"
+  environment     = var.environment
+}
