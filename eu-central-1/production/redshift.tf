@@ -72,13 +72,13 @@
 #
 #         user_group            = ["bi_group"]
 #         query_concurrency     = 2
-#         memory_percent_to_use = 45
+#         memory_percent_to_use = 10
 #         concurrency_scaling   = "off"
 #         rules = [
 #           {
 #             rule_name = "downgrade_bi_long_running"
 #             predicate = [
-#               { metric_name = "query_execution_time", operator = ">", value = 5 }
+#               { metric_name = "query_execution_time", operator = ">", value = 120 }
 #             ]
 #             action = "abort"
 #           },
@@ -103,7 +103,7 @@
 #               { metric_name = "query_cpu_usage_percent", operator = ">", value = 80 },
 #               { metric_name = "query_execution_time", operator = ">", value = 1200 }
 #             ]
-#             action = "ab"
+#             action = "abort"
 #           }
 #         ]
 #       },
