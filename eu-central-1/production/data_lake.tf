@@ -208,7 +208,7 @@ module "cocosurf_tfstate_bucket" {
 module "dubem_angel_city_health_systems_tfstate" {
   source          = "../modules/s3_bucket"
   team            = "achs-project"
-  bucket-use-case = "dubem-achs-tfstate-bucket"
+  bucket-use-case = "dubem-achs-prod-tfstate"
   service         = "s3"
   versioning      = "Enabled"
   environment     = var.environment
