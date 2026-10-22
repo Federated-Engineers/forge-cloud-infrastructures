@@ -80,6 +80,12 @@ resource "aws_iam_policy" "airflow_policy" {
           "ecs:DescribeTasks",
         ]
         Resource = ["*"]
+      },
+      {
+        Sid      = "AllowAirflowECSPassRole"
+        Effect   = "Allow",
+        Action   = "iam:PassRole"
+        Resource = "*"
       }
     ]
   })
