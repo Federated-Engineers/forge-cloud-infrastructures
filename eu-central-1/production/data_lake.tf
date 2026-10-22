@@ -217,7 +217,7 @@ module "dubem_angel_city_health_systems_tfstate" {
 module "emboll_geneva_tfstate" {
   source          = "../modules/s3_bucket"
   team            = var.team
-  bucket-use-case = "emboll_geneva-tfstate"
+  bucket-use-case = "emboll-geneva-tfstate"
   service         = "s3"
   versioning      = "Enabled"
   environment     = var.environment
