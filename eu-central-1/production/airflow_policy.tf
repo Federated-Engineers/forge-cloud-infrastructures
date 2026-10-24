@@ -80,7 +80,8 @@ resource "aws_iam_policy" "airflow_policy" {
           "ecs:RunTask",
           "ecs:DescribeTasks",
         ]
-        Resource = ["*"]
+        Resource = ["*",
+        " arn:aws:ecs:eu-central-1:049417293525:task-definition/*"]
       },
       {
         Sid      = "AllowAirflowECSPassRole"
