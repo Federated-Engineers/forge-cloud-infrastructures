@@ -89,7 +89,7 @@ resource "aws_iam_policy" "airflow_policy" {
         Action   = "iam:PassRole"
         Resource = "*"
       },
-       {
+      {
         Sid    = "AllowGetLogs"
         Effect = "Allow"
         Action = [
