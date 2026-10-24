@@ -88,7 +88,16 @@ resource "aws_iam_policy" "airflow_policy" {
         Effect   = "Allow",
         Action   = "iam:PassRole"
         Resource = "*"
-      }
+      },
+       {
+        Sid    = "AllowGetLogs"
+        Effect = "Allow"
+        Action = [
+          "logs:GetLogEvents",
+        ]
+        Resource = ["*",
+        "arn:aws:logs:eu-central-1:049417293525:log-group:/ecs/achs-dbt:log-stream:dbt/dbt-container/*"]
+      },
     ]
   })
 }
