@@ -72,6 +72,21 @@ resource "aws_iam_policy" "airflow_policy" {
           "dms:DescribeReplicationTasks"
         ]
         Resource = ["*"]
+      },
+      {
+        Sid    = "AllowAirflowRunECS"
+        Effect = "Allow"
+        Action = [
+          "ecs:RunTask",
+          "ecs:DescribeTasks",
+        ]
+        Resource = ["*"]
+      },
+      {
+        Sid      = "AllowAirflowECSPassRole"
+        Effect   = "Allow",
+        Action   = "iam:PassRole"
+        Resource = "*"
       }
     ]
   })
