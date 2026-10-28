@@ -27,6 +27,8 @@ resource "aws_iam_policy" "airflow_policy" {
           "${module.baltilogix_bucket.arn}/*",
           "arn:aws:s3:::baltilogix-raw-ingestion",
           "arn:aws:s3:::baltilogix-raw-ingestion/*",
+          "arn:aws:s3:::cocosurf-gear-datalake",
+          "arn:aws:s3:::cocosurf-gear-datalake/*",
           module.nordic-peaks-oslo.arn,
           "${module.nordic-peaks-oslo.arn}/*",
           "${module.luminabricks_bucket.arn}/*",
@@ -50,6 +52,8 @@ resource "aws_iam_policy" "airflow_policy" {
           "arn:aws:ssm:eu-central-1:049417293525:parameter/supabase/database/credentials",
           "arn:aws:ssm:eu-central-1:049417293525:parameter/production/rds/credentials",
           "arn:aws:ssm:eu-central-1:049417293525:parameter/snowflake/airflow/private-key"
+          "arn:aws:ssm:eu-central-1:049417293525:parameter/production/cocosurf/snowflake/dbt_user",
+          "arn:aws:ssm:eu-central-1:049417293525:parameter/production/cocosurf/snowflake/dbt_user_password",
 
         ]
       },
