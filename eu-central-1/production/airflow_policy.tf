@@ -51,6 +51,7 @@ resource "aws_iam_policy" "airflow_policy" {
           "arn:aws:ssm:eu-central-1:049417293525:parameter/production/forge/bbss/api-key",
           "arn:aws:ssm:eu-central-1:049417293525:parameter/supabase/database/credentials",
           "arn:aws:ssm:eu-central-1:049417293525:parameter/production/rds/credentials",
+          "arn:aws:ssm:eu-central-1:049417293525:parameter/snowflake/airflow/private-key",
           "arn:aws:ssm:eu-central-1:049417293525:parameter/production/cocosurf/snowflake/dbt_user",
           "arn:aws:ssm:eu-central-1:049417293525:parameter/production/cocosurf/snowflake/dbt_user_password",
 
@@ -83,14 +84,24 @@ resource "aws_iam_policy" "airflow_policy" {
           "ecs:RunTask",
           "ecs:DescribeTasks",
         ]
-        Resource = ["*"]
+        Resource = ["*",
+        " arn:aws:ecs:eu-central-1:049417293525:task-definition/*"]
       },
       {
         Sid      = "AllowAirflowECSPassRole"
         Effect   = "Allow",
         Action   = "iam:PassRole"
         Resource = "*"
-      }
+      },
+      {
+        Sid    = "AllowGetLogs"
+        Effect = "Allow"
+        Action = [
+          "logs:GetLogEvents",
+        ]
+        Resource = ["*",
+        "arn:aws:logs:eu-central-1:049417293525:log-group:/ecs/achs-dbt:log-stream:dbt/dbt-container/*"]
+      },
     ]
   })
 }
