@@ -80,6 +80,10 @@ resource "aws_iam_policy" "airflow_policy" {
         Action = [
           "ecs:RunTask",
           "ecs:DescribeTasks",
+          "ecs:ListTasks",
+          "ecs:DescribeTaskDefinition",
+          "ecs:DescribeClusters",
+          "ecs:StopTask"
         ]
         Resource = ["*"]
       },
