@@ -51,8 +51,6 @@ resource "aws_iam_policy" "airflow_policy" {
           "arn:aws:ssm:eu-central-1:049417293525:parameter/production/forge/bbss/api-key",
           "arn:aws:ssm:eu-central-1:049417293525:parameter/supabase/database/credentials",
           "arn:aws:ssm:eu-central-1:049417293525:parameter/production/rds/credentials",
-          "arn:aws:ssm:eu-central-1:049417293525:parameter/production/cocosurf/snowflake/dbt_user",
-          "arn:aws:ssm:eu-central-1:049417293525:parameter/production/cocosurf/snowflake/dbt_user_password",
 
         ]
       },
