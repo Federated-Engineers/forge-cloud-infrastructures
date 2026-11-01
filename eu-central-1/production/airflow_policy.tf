@@ -101,3 +101,4 @@ resource "aws_iam_role_policy_attachment" "airflow_policy_attachment" {
   role       = "eks-forge-airflow-role"
   policy_arn = aws_iam_policy.airflow_policy.arn
 }
+
