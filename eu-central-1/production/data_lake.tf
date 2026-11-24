@@ -222,3 +222,12 @@ module "emboll_geneva_tfstate" {
   versioning      = "Enabled"
   environment     = var.environment
 }
+
+module "rheinsafe_tfstate_bucket" {
+  source          = "../modules/s3_bucket"
+  team            = var.team
+  bucket-use-case = "rheinsafe-tfstate"
+  service         = "s3"
+  versioning      = "Enabled"
+  environment     = var.environment
+}
